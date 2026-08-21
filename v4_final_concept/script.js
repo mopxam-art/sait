@@ -97,6 +97,47 @@ function initNav() {
         }
     });
     
+    // Font Size Control
+    const fontSliders = document.querySelectorAll('.font-slider');
+    if (fontSliders.length > 0) {
+        // Set initial value based on screen size
+        let initialSize = 1.8;
+        if (window.innerWidth <= 600) {
+            initialSize = 1.1;
+        } else if (window.innerWidth <= 900) {
+            initialSize = 1.4;
+        }
+        document.documentElement.style.setProperty('--poem-font-size', `${initialSize}rem`);
+        
+        fontSliders.forEach(slider => {
+            slider.value = initialSize;
+            slider.addEventListener('input', (e) => {
+                const val = e.target.value;
+                document.documentElement.style.setProperty('--poem-font-size', `${val}rem`);
+                // sync all sliders
+                fontSliders.forEach(s => { if (s !== e.target) s.value = val; });
+            });
+        });
+        
+        // Font size buttons
+        const updateFont = (step) => {
+            let current = parseFloat(fontSliders[0].value);
+            let newVal = current + step;
+            if (newVal < 0.8) newVal = 0.8;
+            if (newVal > 2.4) newVal = 2.4;
+            document.documentElement.style.setProperty('--poem-font-size', `${newVal}rem`);
+            fontSliders.forEach(s => s.value = newVal);
+        };
+        
+        document.querySelectorAll('.font-decrease').forEach(btn => {
+            btn.addEventListener('click', () => updateFont(-0.1));
+        });
+        document.querySelectorAll('.font-increase').forEach(btn => {
+            btn.addEventListener('click', () => updateFont(0.1));
+        });
+    }
+    
+    // Load initial poem
     if (firstPoem) {
         loadPoem(firstPoem, true);
     }
@@ -123,8 +164,8 @@ function loadPoem(poem, initial = false) {
         const stanzas = poem.text.split('\n\n').map(s => {
             const hasTab = s.startsWith('\t') || s.includes('\n\t');
             const lines = s.replace(/\t/g, '').replace(/\n/g, '<br>');
-            if (/^\d+$/.test(lines.trim())) {
-                return `<p class="stanza part-number">${lines}</p>`;
+            if (/^\d+$/.test(s.trim())) {
+                return `<p class="stanza part-number">${s.trim()}</p>`;
             }
             return `<p class="stanza${hasTab ? ' indented' : ''}">${lines}</p>`;
         }).join('');

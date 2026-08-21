@@ -304,8 +304,22 @@ def parse_poems_docx2():
                         break
                         
             if footnote_start != -1:
-                footnote_text = '\n'.join(text_lines[footnote_start:])
+                f_lines = text_lines[footnote_start:]
+                combined = []
+                for line in f_lines:
+                    if line == '':
+                        continue
+                    if line.startswith('*'):
+                        combined.append(line)
+                    else:
+                        if combined:
+                            combined[-1] += ' ' + line
+                        else:
+                            combined.append(line)
+                            
+                footnote_text = '\n'.join(combined)
                 footnotes.append(footnote_text)
+                
                 text_lines = text_lines[:footnote_start]
                 while text_lines and text_lines[-1] == '':
                     text_lines.pop()
@@ -414,8 +428,11 @@ def parse_poems_docx2():
                     text_clean = parts[1].strip()
             
             # Clean up trailing spaces/commas in title
-            if title.endswith(' ,') or title.endswith(','):
-                title = title.replace(' ,', ',').strip()
+            title = title.rstrip(' ,')
+            
+            # Custom rename for Poem 5
+            if title == 'Гэй, хто з намі ?!':
+                title = 'Гэй, хто з намі ?! (Філасофскі варыянт)'
             
             parsed_poems.append({
                 'title': title,

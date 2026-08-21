@@ -71,9 +71,29 @@ body {
     -webkit-backdrop-filter: blur(16px);
     border-bottom: 1px solid var(--glass-border);
     align-items: center;
+    justify-content: space-between;
     position: sticky;
     top: 0;
     z-index: 50;
+    gap: 1rem;
+}
+
+.mobile-title {
+    font-size: 1.2rem;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    margin: 0;
+    flex-grow: 1;
+    text-align: center;
+}
+
+.mobile-font-control {
+    margin: 0;
+}
+
+.mobile-font-control input[type="range"] {
+    width: 80px; /* slightly smaller for mobile */
 }
 
 .menu-toggle {
@@ -169,35 +189,115 @@ body {
     transition: color 1s ease;
 }
 
-/* Theme Toggle Button */
-.theme-toggle {
-    background: transparent;
-    border: 1px solid var(--glass-border);
-    color: var(--text-secondary);
-    cursor: pointer;
-    padding: 0.8rem;
-    border-radius: 50%;
-    transition: all 0.3s ease;
-    display: inline-flex;
+.sidebar-settings {
+    display: flex;
+    flex-direction: column;
     align-items: center;
-    justify-content: center;
+    gap: 1.5rem;
+    margin-bottom: 2rem;
 }
 
-.theme-toggle:hover {
-    color: var(--accent);
-    background: rgba(255, 255, 255, 0.05);
+/* Theme Toggle Switch */
+.theme-toggle {
+    position: relative;
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid var(--glass-border);
+    cursor: pointer;
+    padding: 0.4rem 0.6rem;
+    border-radius: 30px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 72px;
+    height: 36px;
+    transition: all 0.3s ease;
+}
+
+.theme-toggle .icon-sun,
+.theme-toggle .icon-moon {
+    width: 16px;
+    height: 16px;
+    z-index: 2;
+    transition: all 0.3s ease;
 }
 
 .theme-toggle .icon-sun {
-    display: none;
+    color: var(--accent);
 }
 
-body.theme-night .theme-toggle .icon-moon {
-    display: none;
+.theme-toggle .icon-moon {
+    color: var(--text-secondary);
+}
+
+.theme-toggle .toggle-slider {
+    position: absolute;
+    top: 4px;
+    left: 4px;
+    width: 26px;
+    height: 26px;
+    background: rgba(255, 255, 255, 0.08);
+    border: 1px solid var(--glass-border);
+    border-radius: 50%;
+    transition: transform 0.3s cubic-bezier(0.4, 0.0, 0.2, 1);
+    z-index: 1;
+}
+
+body.theme-night .theme-toggle .toggle-slider {
+    transform: translateX(36px);
 }
 
 body.theme-night .theme-toggle .icon-sun {
-    display: block;
+    color: var(--text-secondary);
+}
+
+body.theme-night .theme-toggle .icon-moon {
+    color: var(--accent);
+}
+
+.theme-toggle:hover .toggle-slider {
+    background: rgba(255, 255, 255, 0.15);
+}
+
+/* Font Size Control */
+.font-control {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    color: var(--text-secondary);
+}
+
+.font-control input[type="range"] {
+    -webkit-appearance: none;
+    width: 100px;
+    height: 4px;
+    background: var(--glass-border);
+    border-radius: 2px;
+    outline: none;
+}
+
+.font-decrease, .font-increase {
+    cursor: pointer;
+    user-select: none;
+    transition: color 0.2s ease;
+}
+
+.font-decrease:hover, .font-increase:hover {
+    color: var(--accent);
+}
+
+.font-control input[type="range"]::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    background: var(--accent);
+    cursor: pointer;
+    transition: transform 0.2s;
+}
+
+.font-control input[type="range"]::-webkit-slider-thumb:hover {
+    transform: scale(1.2);
 }
 
 .poem-nav {
@@ -392,16 +492,15 @@ body.theme-night .theme-toggle .icon-sun {
 
 .poem-body {
     font-family: 'Lora', serif; /* Font from V3 */
-    font-size: 1.8rem; /* Large size from V2 */
+    font-size: var(--poem-font-size, 1.8rem);
     line-height: 1.9;
     color: var(--text-primary);
     max-width: 800px;
     margin: 0 auto;
-    transition: color 1s ease;
+    transition: color 1s ease, font-size 0.2s ease;
 }
 
 .stanza.part-number {
-    font-size: 2.5rem;
     font-family: 'Lora', serif;
     font-style: italic;
     color: var(--accent);
@@ -501,10 +600,42 @@ body.theme-night .theme-toggle .icon-sun {
     }
     
     .poem-body {
-        font-size: 1.4rem;
+        /* font-size controlled by CSS var */
     }
     
     .stanza:first-child::first-letter {
         font-size: 4rem;
+    }
+}
+
+@media (max-width: 600px) {
+    .poem-card {
+        padding: 1.5rem;
+    }
+    .poem-title {
+        font-size: 2.2rem;
+    }
+    .poem-subtitle {
+        font-size: 1.2rem;
+    }
+    .drop-cap {
+        font-size: 3rem;
+        padding-right: 0.5rem;
+    }
+    .drop-cap::after {
+        font-size: 0.8rem;
+        top: -5px;
+    }
+    .stanza.part-number {
+        font-size: 1.5rem;
+    }
+    .poem-epigraph {
+        font-size: 0.95rem;
+    }
+    .poem-date {
+        font-size: 1rem;
+    }
+    .poem-footnotes {
+        font-size: 0.9rem;
     }
 }

@@ -23,6 +23,11 @@
             <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
         </button>
         <h1 class="mobile-title">Віктар Морхат</h1>
+        <div class="font-control mobile-font-control" aria-label="Памер шрыфта">
+            <span class="font-decrease" style="font-size: 0.9rem">A</span>
+            <input type="range" class="font-slider" min="0.8" max="2.4" step="0.1" value="1.1" aria-label="Рэгуляваць памер шрыфта">
+            <span class="font-increase" style="font-size: 1.4rem">A</span>
+        </div>
     </header>
 
     <!-- Mobile Overlay -->
@@ -35,10 +40,18 @@
                 <h1>Віктар Морхат</h1>
                 <p>Паэтычны архіў</p>
                 
-                <button id="theme-toggle" class="theme-toggle" aria-label="Пераключыць тэму">
-                    <svg class="icon-sun" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg>
-                    <svg class="icon-moon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>
-                </button>
+                <div class="sidebar-settings">
+                      <button id="theme-toggle" class="theme-toggle" aria-label="Пераключыць тэму">
+                          <div class="toggle-slider"></div>
+                          <svg class="icon-sun" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg>
+                          <svg class="icon-moon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>
+                      </button>
+                      <div class="font-control" aria-label="Памер шрыфта">
+                          <span class="font-decrease" style="font-size: 0.9rem">A</span>
+                          <input type="range" class="font-slider" min="0.8" max="2.4" step="0.1" value="1.8" aria-label="Рэгуляваць памер шрыфта">
+                          <span class="font-increase" style="font-size: 1.4rem">A</span>
+                      </div>
+                  </div>
             </header>
             
             <nav class="poem-nav">
