@@ -378,9 +378,11 @@ body.theme-night .theme-toggle .icon-sun {
 }
 
 .poem-footnotes {
-    font-size: 0.95rem;
+    font-family: 'Lora', serif;
+    font-style: italic;
+    font-size: 1rem;
     color: var(--text-secondary);
-    opacity: 0.7;
+    opacity: 0.8;
     border-top: 1px solid var(--glass-border);
     padding-top: 1.5rem;
     margin-top: 3rem;
@@ -396,6 +398,16 @@ body.theme-night .theme-toggle .icon-sun {
     max-width: 800px;
     margin: 0 auto;
     transition: color 1s ease;
+}
+
+.stanza.part-number {
+    font-size: 2.5rem;
+    font-family: 'Lora', serif;
+    font-style: italic;
+    color: var(--accent);
+    text-align: center;
+    margin-top: 3rem;
+    margin-bottom: 1.5rem;
 }
 
 .stanza {

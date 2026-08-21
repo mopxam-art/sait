@@ -121,8 +121,11 @@ function loadPoem(poem, initial = false) {
         }
         
         const stanzas = poem.text.split('\n\n').map(s => {
-            const hasTab = s.includes('\t');
+            const hasTab = s.startsWith('\t') || s.includes('\n\t');
             const lines = s.replace(/\t/g, '').replace(/\n/g, '<br>');
+            if (/^\d+$/.test(lines.trim())) {
+                return `<p class="stanza part-number">${lines}</p>`;
+            }
             return `<p class="stanza${hasTab ? ' indented' : ''}">${lines}</p>`;
         }).join('');
         bodyEl.innerHTML = stanzas;

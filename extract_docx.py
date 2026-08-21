@@ -170,7 +170,9 @@ def parse_poems_docx2():
         
         # Preserve empty lines for stanzas
         for line_text in text.split('\n'):
-            line_text = line_text.strip()
+            line_text = line_text.replace('\t', '    ').strip()
+            # If replacing tab leaves multiple commas or floating commas, fix it
+            line_text = re.sub(r',\s*,', ',', line_text)
             current_poem.append({
                 'text': line_text,
                 'is_italic': is_italic,
@@ -216,6 +218,8 @@ def parse_poems_docx2():
                 
             # Extract epigraph
             while idx < len(raw_poem) and raw_poem[idx]['is_italic'] and not raw_poem[idx]['is_empty']:
+                if raw_poem[idx]['text'].strip() in ['1', '2', '3']:
+                    break
                 epigraph.append(raw_poem[idx]['text'])
                 idx += 1
                 
@@ -243,8 +247,14 @@ def parse_poems_docx2():
             if end_idx > idx:
                 txt = raw_poem[end_idx]['text']
                 if re.search(r'\b(19|20)\d{2}\b', txt) or ' г.' in txt:
-                    date = txt
-                    end_idx -= 1
+                    txt_clean = re.sub(r'[\*\s]+$', '', txt)
+                    if '    ' in txt_clean:
+                        parts = re.split(r'\s{4,}', txt_clean)
+                        date = parts[-1]
+                        raw_poem[end_idx]['text'] = txt[:txt.rfind(date)].strip()
+                    else:
+                        date = txt_clean
+                        end_idx -= 1
                     
             # Extract main text
             last_was_indented = None
@@ -259,18 +269,46 @@ def parse_poems_docx2():
                     text_lines.append('')
                     last_was_indented = None
                 else:
-                    # If indent changed from previous line, insert stanza break
-                    if last_was_indented is not None and last_was_indented != p_data['is_indented']:
-                        if text_lines and text_lines[-1] != '':
-                            text_lines.append('')
-                            
                     if txt != title and txt != title + '.':
-                        if p_data['is_indented']:
-                            text_lines.append('\t' + txt)
-                        else:
-                            text_lines.append(txt)
+                        text_lines.append(txt)
                         
                     last_was_indented = p_data['is_indented']
+                        
+            # Isolate part numbers
+            iso_lines = []
+            for txt in text_lines:
+                if txt.strip() in ['1', '2', '3']:
+                    if iso_lines and iso_lines[-1] != '':
+                        iso_lines.append('')
+                    iso_lines.append(txt.strip())
+                    iso_lines.append('')
+                else:
+                    iso_lines.append(txt)
+            text_lines = iso_lines
+                        
+            # Clean up trailing empty lines
+            while text_lines and text_lines[-1] == '':
+                text_lines.pop()
+                
+            # Remove purely dotted lines
+            text_lines = [l for l in text_lines if not re.match(r'^[\.\s]+$', l)]
+            
+            # Find footnotes
+            footnote_start = -1
+            for i in range(len(text_lines)):
+                line = text_lines[i]
+                if line.startswith('*') and len(line.replace('*', '').strip()) > 2:
+                    # check if this is near the end
+                    if i > len(text_lines) - 20:
+                        footnote_start = i
+                        break
+                        
+            if footnote_start != -1:
+                footnote_text = '\n'.join(text_lines[footnote_start:])
+                footnotes.append(footnote_text)
+                text_lines = text_lines[:footnote_start]
+                while text_lines and text_lines[-1] == '':
+                    text_lines.pop()
                         
             # Auto-chunking for missing empty lines
             chunked_lines = []
@@ -321,6 +359,9 @@ def parse_poems_docx2():
             while text_lines and text_lines[-1] == '':
                 text_lines.pop()
                 
+            # Fix typo in Poem 2 (author's style: single line)
+            text_lines = [l.replace('халады…Над', 'халады… Над') for l in text_lines]
+                
             text_clean = '\n'.join(text_lines)
             
             original_title = title
@@ -335,7 +376,7 @@ def parse_poems_docx2():
             # Check if subtitle got sucked into epigraph (if it was italicized)
             if epigraph:
                 first_epi_line = epigraph[0].strip('. ').lower()
-                if first_epi_line.startswith('санет') or first_epi_line.startswith('элегія') or first_epi_line.startswith('альбо ') or first_epi_line.startswith('або '):
+                if first_epi_line.startswith('санет') or first_epi_line.startswith('ода') or first_epi_line.startswith('трыпціх') or first_epi_line.startswith('элегія') or first_epi_line.startswith('альбо ') or first_epi_line.startswith('або '):
                     subtitle_val = epigraph.pop(0)
                     
             epigraph_val = '\n'.join(epigraph)
