@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="be">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Віктар Морхат - Лірыка</title>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <!-- Cormorant Garamond for main text, Caveat for handwriting notes -->
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Caveat:wght@400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="book-container">
+        <!-- Left Page: Cover / Navigation / Archive -->
+        <aside class="page left-page">
+            <div class="page-content">
+                <header class="author-header">
+                    <h1>Віктар Морхат</h1>
+                    <p class="subtitle">Сямейны паэтычны архіў</p>
+                    <div class="divider"></div>
+                </header>
+                
+                <nav class="book-nav">
+                    <p class="nav-title">Змест</p>
+                    <ul class="nav-list" id="poem-list">
+                        <!-- Navigation items injected by JS -->
+                    </ul>
+                </nav>
+                
+                <div class="archive-note">
+                    <p class="handwriting">Гэтыя вершы пісаліся пераважна для блізкіх, да сямейных свят ці проста як роздум аб жыцці...</p>
+                </div>
+            </div>
+        </aside>
+
+        <!-- Right Page: Poem Content -->
+        <main class="page right-page">
+            <div class="page-content poem-content" id="poem-wrapper">
+                <header class="poem-header">
+                    <h2 class="poem-title" id="poem-title"></h2>
+                    <h3 class="poem-subtitle" id="poem-subtitle"></h3>
+                </header>
+                
+                <div class="poem-body-container">
+                    <div class="poem-body" id="poem-body">
+                        <!-- Poem stanzas injected by JS -->
+                    </div>
+                    
+                    <!-- Margin Notes / Handwriting -->
+                    <aside class="margin-notes" id="margin-notes">
+                        <p class="handwriting" id="poem-date"></p>
+                    </aside>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

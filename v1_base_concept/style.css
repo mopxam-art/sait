@@ -1,0 +1,276 @@
+:root {
+    --bg-color: #0b0c10;
+    --text-primary: #e0e6ed;
+    --text-secondary: #a0aab2;
+    --accent: #d4af37; /* Gold accent */
+    --glass-bg: rgba(20, 22, 28, 0.6);
+    --glass-border: rgba(255, 255, 255, 0.08);
+    --glass-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Montserrat', sans-serif;
+    background: radial-gradient(circle at center, #1b202c 0%, #0b0c10 100%);
+    color: var(--text-primary);
+    min-height: 100vh;
+    overflow-x: hidden;
+    line-height: 1.6;
+}
+
+/* Background Stars Animation */
+.stars-bg {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    z-index: -1;
+    pointer-events: none;
+    background: transparent;
+}
+
+.star {
+    position: absolute;
+    background: #fff;
+    border-radius: 50%;
+    animation: twinkle infinite alternate;
+}
+
+@keyframes twinkle {
+    0% { opacity: 0.2; transform: scale(0.8); }
+    100% { opacity: 1; transform: scale(1.2); box-shadow: 0 0 10px rgba(255, 255, 255, 0.8); }
+}
+
+/* Layout */
+.app-container {
+    display: flex;
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 2rem;
+    gap: 2rem;
+    min-height: 100vh;
+}
+
+/* Sidebar */
+.sidebar {
+    flex: 0 0 320px;
+    background: var(--glass-bg);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border: 1px solid var(--glass-border);
+    border-radius: 24px;
+    padding: 2rem;
+    box-shadow: var(--glass-shadow);
+    display: flex;
+    flex-direction: column;
+    height: calc(100vh - 4rem);
+    position: sticky;
+    top: 2rem;
+}
+
+.sidebar-header {
+    margin-bottom: 2rem;
+    text-align: center;
+    border-bottom: 1px solid var(--glass-border);
+    padding-bottom: 1.5rem;
+}
+
+.sidebar-header h1 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 2.2rem;
+    color: var(--accent);
+    font-weight: 600;
+    letter-spacing: 1px;
+    margin-bottom: 0.5rem;
+}
+
+.sidebar-header p {
+    font-size: 0.9rem;
+    color: var(--text-secondary);
+    text-transform: uppercase;
+    letter-spacing: 2px;
+}
+
+.poem-nav {
+    flex-grow: 1;
+    overflow-y: auto;
+}
+
+.poem-nav::-webkit-scrollbar {
+    width: 4px;
+}
+.poem-nav::-webkit-scrollbar-thumb {
+    background: var(--glass-border);
+    border-radius: 4px;
+}
+
+.nav-list {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 0.8rem;
+}
+
+.nav-item a {
+    text-decoration: none;
+    color: var(--text-secondary);
+    font-size: 1rem;
+    padding: 0.8rem 1.2rem;
+    display: block;
+    border-radius: 12px;
+    transition: all 0.3s ease;
+    border: 1px solid transparent;
+}
+
+.nav-item a:hover {
+    background: rgba(255, 255, 255, 0.05);
+    color: var(--text-primary);
+    transform: translateX(5px);
+}
+
+.nav-item.active a {
+    background: rgba(212, 175, 55, 0.1);
+    color: var(--accent);
+    border: 1px solid rgba(212, 175, 55, 0.3);
+}
+
+/* Main Content */
+.main-content {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+}
+
+.poem-card {
+    background: var(--glass-bg);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border: 1px solid var(--glass-border);
+    border-radius: 24px;
+    padding: 4rem 5rem;
+    box-shadow: var(--glass-shadow);
+    animation: fadeIn 1s ease-out;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.poem-header {
+    text-align: center;
+    margin-bottom: 3.5rem;
+    position: relative;
+}
+
+.poem-header::after {
+    content: '✦';
+    position: absolute;
+    bottom: -2rem;
+    left: 50%;
+    transform: translateX(-50%);
+    color: var(--accent);
+    font-size: 1.5rem;
+    opacity: 0.6;
+}
+
+.poem-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 3.5rem;
+    font-weight: 600;
+    color: var(--text-primary);
+    margin-bottom: 0.5rem;
+    line-height: 1.2;
+}
+
+.poem-subtitle {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.8rem;
+    font-style: italic;
+    color: var(--text-secondary);
+    font-weight: 400;
+}
+
+.poem-body {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.5rem;
+    line-height: 1.8;
+    color: #f0f4f8;
+    max-width: 700px;
+    margin: 0 auto;
+}
+
+.stanza {
+    margin-bottom: 2rem;
+    white-space: pre-line;
+}
+
+.poem-footer {
+    text-align: right;
+    margin-top: 3rem;
+    font-style: italic;
+    color: var(--text-secondary);
+    font-family: 'Montserrat', sans-serif;
+}
+
+.poem-notes {
+    margin-top: 4rem;
+    padding-top: 2rem;
+    border-top: 1px dashed var(--glass-border);
+    font-size: 0.9rem;
+    color: var(--text-secondary);
+}
+
+.note-item {
+    margin-bottom: 0.8rem;
+}
+
+.note-item strong {
+    color: var(--accent);
+    font-weight: 500;
+}
+
+/* Responsive */
+@media (max-width: 992px) {
+    .app-container {
+        flex-direction: column;
+    }
+    
+    .sidebar {
+        height: auto;
+        position: relative;
+        top: 0;
+    }
+    
+    .poem-card {
+        padding: 2.5rem;
+    }
+    
+    .poem-title {
+        font-size: 2.5rem;
+    }
+    
+    .poem-subtitle {
+        font-size: 1.4rem;
+    }
+    
+    .poem-body {
+        font-size: 1.3rem;
+    }
+}
+
+@media (max-width: 600px) {
+    .poem-card {
+        padding: 1.5rem;
+    }
+    .poem-body {
+        font-size: 1.2rem;
+    }
+}

@@ -1,0 +1,271 @@
+:root {
+    /* Day Theme Variables */
+    --bg-color: #F7F5F0; /* Warm paper */
+    --surface-color: #F7F5F0;
+    --text-primary: #1A1A1A; /* Soft black */
+    --text-secondary: #6B6B6B;
+    --accent: #B24C38; /* Rust red */
+    --border-color: #E2DFD6;
+    --hover-bg: #EAE6DB;
+    --drop-cap-color: #1A1A1A;
+}
+
+body.theme-dark {
+    /* Night Theme Variables */
+    --bg-color: #161618;
+    --surface-color: #161618;
+    --text-primary: #E8E6E3;
+    --text-secondary: #9C9A96;
+    --accent: #D4AF37; /* Gold */
+    --border-color: #2D2D2D;
+    --hover-bg: #222222;
+    --drop-cap-color: #D4AF37;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Lora', serif;
+    background-color: var(--bg-color);
+    color: var(--text-primary);
+    transition: background-color 0.6s ease, color 0.6s ease;
+    min-height: 100vh;
+    overflow-y: scroll;
+}
+
+/* Layout */
+.layout {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 2rem;
+}
+
+/* Header */
+.top-bar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 3rem 0;
+    border-bottom: 1px solid var(--border-color);
+    margin-bottom: 4rem;
+    transition: border-color 0.6s ease;
+}
+
+.author-info h1 {
+    font-family: 'Inter', sans-serif;
+    font-size: 1.2rem;
+    font-weight: 500;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-bottom: 0.2rem;
+}
+
+.author-info span {
+    font-family: 'Inter', sans-serif;
+    font-size: 0.85rem;
+    color: var(--text-secondary);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+/* Theme Toggle Button */
+.theme-toggle {
+    background: transparent;
+    border: none;
+    color: var(--text-secondary);
+    cursor: pointer;
+    padding: 0.5rem;
+    border-radius: 50%;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.theme-toggle:hover {
+    color: var(--text-primary);
+    background: var(--hover-bg);
+}
+
+.theme-toggle .icon-moon {
+    display: none;
+}
+
+body.theme-dark .theme-toggle .icon-sun {
+    display: none;
+}
+
+body.theme-dark .theme-toggle .icon-moon {
+    display: block;
+}
+
+/* Main Container */
+.main-container {
+    display: flex;
+    gap: 6rem;
+    padding-bottom: 6rem;
+}
+
+/* Sidebar Navigation */
+.sidebar {
+    flex: 0 0 250px;
+}
+
+.nav-list {
+    list-style: none;
+    position: sticky;
+    top: 4rem;
+}
+
+.nav-list li {
+    margin-bottom: 1rem;
+}
+
+.nav-list a {
+    text-decoration: none;
+    font-family: 'Inter', sans-serif;
+    font-size: 0.95rem;
+    color: var(--text-secondary);
+    display: block;
+    padding: 0.5rem 0;
+    transition: all 0.3s ease;
+    position: relative;
+}
+
+.nav-list a:hover {
+    color: var(--text-primary);
+    padding-left: 0.5rem;
+}
+
+.nav-list li.active a {
+    color: var(--accent);
+    font-weight: 500;
+}
+
+.nav-list li.active a::before {
+    content: '';
+    position: absolute;
+    left: -1rem;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 4px;
+    height: 4px;
+    border-radius: 50%;
+    background-color: var(--accent);
+}
+
+/* Poem Content */
+.content {
+    flex: 1;
+    max-width: 700px;
+}
+
+.poem-wrapper {
+    opacity: 1;
+    transform: translateY(0);
+    transition: opacity 0.5s ease, transform 0.5s ease;
+}
+
+.poem-wrapper.fading {
+    opacity: 0;
+    transform: translateY(15px);
+}
+
+.poem-header {
+    margin-bottom: 3.5rem;
+}
+
+.poem-title {
+    font-size: 3rem;
+    font-weight: 400;
+    line-height: 1.2;
+    color: var(--text-primary);
+    font-style: italic;
+}
+
+.poem-body {
+    font-size: 1.4rem; /* Huge readable font */
+    line-height: 1.9;
+}
+
+.stanza {
+    margin-bottom: 2.5rem;
+    white-space: pre-line;
+}
+
+/* Elegant Drop Cap for the very first letter */
+.stanza:first-child::first-letter {
+    float: left;
+    font-size: 4.5rem;
+    line-height: 0.8;
+    padding-top: 0.2rem;
+    padding-right: 0.5rem;
+    padding-left: 0.1rem;
+    color: var(--drop-cap-color);
+    font-weight: 400;
+}
+
+.poem-footer {
+    margin-top: 5rem;
+    padding-top: 2rem;
+    border-top: 1px solid var(--border-color);
+    font-family: 'Inter', sans-serif;
+    font-size: 0.9rem;
+    color: var(--text-secondary);
+    text-align: right;
+    transition: border-color 0.6s ease;
+}
+
+/* Responsive */
+@media (max-width: 900px) {
+    .main-container {
+        flex-direction: column;
+        gap: 3rem;
+    }
+    
+    .sidebar {
+        flex: none;
+    }
+    
+    .nav-list {
+        position: static;
+        display: flex;
+        flex-wrap: wrap;
+        gap: 1rem;
+    }
+    
+    .nav-list li {
+        margin-bottom: 0;
+    }
+    
+    .nav-list a {
+        padding: 0.5rem 1rem;
+        background: var(--hover-bg);
+        border-radius: 20px;
+    }
+    
+    .nav-list li.active a {
+        background: var(--accent);
+        color: var(--bg-color);
+    }
+    
+    .nav-list li.active a::before {
+        display: none;
+    }
+    
+    .nav-list a:hover {
+        padding-left: 1rem;
+    }
+    
+    .poem-title {
+        font-size: 2.2rem;
+    }
+    
+    .poem-body {
+        font-size: 1.2rem;
+    }
+}

@@ -1,0 +1,409 @@
+:root {
+    /* Night Theme Variables (Default) */
+    --bg-color: #0b0c10;
+    --text-primary: #e0e6ed;
+    --text-secondary: #a0aab2;
+    --accent: #d4af37; /* Gold */
+    --glass-bg: rgba(20, 22, 28, 0.6);
+    --glass-border: rgba(255, 255, 255, 0.08);
+    --glass-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+    --bg-gradient: radial-gradient(circle at center, #1b202c 0%, #0b0c10 100%);
+    --particle-color: 255, 255, 255; /* Stars */
+    --card-texture: url('data:image/svg+xml;base64,PHN2ZyB2aWV3Qm94PSIwIDAgMjAwIDIwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48ZmlsdGVyIGlkPSJub2lzZSI+PGZlVHVyYnVsZW5jZSB0eXBlPSJmcmFjdGFsTm9pc2UiIGJhc2VGcmVxdWVuY3k9IjAuMDE1IiBudW1PY3RhdmVzPSI0IiBzdGl0Y2hUaWxlcz0ic3RpdGNoIi8+PC9maWx0ZXI+PHJlY3Qgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgZmlsdGVyPSJ1cmwoI25vaXNlKSIgb3BhY2l0eT0iMC4xNSIvPjwvc3ZnPg=='); /* Marble */
+}
+
+body.theme-day {
+    /* Day Theme Variables */
+    --bg-color: #f5f2eb;
+    --text-primary: #2c2a26;
+    --text-secondary: #6e6b66;
+    --accent: #8b5a2b; /* Warm brown/gold */
+    --glass-bg: rgba(255, 255, 255, 0.5);
+    --glass-border: rgba(139, 90, 43, 0.15);
+    --glass-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.05);
+    --bg-gradient: radial-gradient(circle at center, #ffffff 0%, #f5f2eb 100%);
+    --particle-color: 235, 175, 175; /* Petals/flowers */
+    --card-texture: url('data:image/svg+xml;base64,PHN2ZyB2aWV3Qm94PSIwIDAgMjAwIDIwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48ZmlsdGVyIGlkPSJub2lzZSI+PGZlVHVyYnVsZW5jZSB0eXBlPSJmcmFjdGFsTm9pc2UiIGJhc2VGcmVxdWVuY3k9IjAuOCIgbnVtT2N0YXZlcz0iNCIgc3RpdGNoVGlsZXM9InN0aXRjaCIvPjwvZmlsdGVyPjxyZWN0IHdpZHRoPSIxMDAlIiBoZWlnaHQ9IjEwMCUiIGZpbHRlcj0idXJsKCNub2lzZSkiIG9wYWNpdHk9IjAuMDgiLz48L3N2Zz4='); /* Paper */
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Montserrat', sans-serif; /* For UI */
+    color: var(--text-primary);
+    min-height: 100vh;
+    overflow-x: hidden;
+    line-height: 1.6;
+    transition: background-color 1s ease, color 1s ease;
+}
+
+.bg-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    z-index: -2;
+    background: var(--bg-gradient);
+    transition: opacity 1s ease, background 1s ease;
+}
+
+/* Background Particles Animation */
+.particles-bg {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    z-index: -1;
+    pointer-events: none;
+    background: transparent;
+}
+
+/* Mobile Specific Elements */
+.mobile-header {
+    display: none;
+    padding: 1rem 1.5rem;
+    background: var(--glass-bg);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border-bottom: 1px solid var(--glass-border);
+    align-items: center;
+    position: sticky;
+    top: 0;
+    z-index: 50;
+}
+
+.menu-toggle {
+    background: transparent;
+    border: none;
+    color: var(--text-primary);
+    cursor: pointer;
+    padding: 0.5rem;
+    margin-right: 1rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.mobile-title {
+    font-family: 'Lora', serif;
+    font-size: 1.5rem;
+    color: var(--accent);
+    font-weight: 500;
+}
+
+.mobile-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: 90;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s ease, visibility 0.3s ease;
+}
+
+.mobile-overlay.active {
+    opacity: 1;
+    visibility: visible;
+}
+
+/* Layout */
+.layout {
+    display: flex;
+    max-width: 1600px;
+    margin: 0 auto;
+    padding: 2rem;
+    gap: 3rem;
+    min-height: 100vh;
+}
+
+/* Sidebar */
+.sidebar {
+    flex: 0 0 350px;
+    background: var(--glass-bg);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border: 1px solid var(--glass-border);
+    border-radius: 24px;
+    padding: 2rem;
+    box-shadow: var(--glass-shadow);
+    display: flex;
+    flex-direction: column;
+    height: calc(100vh - 4rem);
+    position: sticky;
+    top: 2rem;
+    transition: all 1s ease;
+}
+
+.sidebar-header {
+    margin-bottom: 2rem;
+    text-align: center;
+    border-bottom: 1px solid var(--glass-border);
+    padding-bottom: 1.5rem;
+    position: relative;
+    transition: border-color 1s ease;
+}
+
+.sidebar-header h1 {
+    font-family: 'Lora', serif;
+    font-size: 2.5rem;
+    color: var(--accent);
+    font-weight: 500;
+    letter-spacing: 1px;
+    margin-bottom: 0.5rem;
+    transition: color 1s ease;
+}
+
+.sidebar-header p {
+    font-size: 1rem;
+    color: var(--text-secondary);
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    margin-bottom: 1.5rem;
+    transition: color 1s ease;
+}
+
+/* Theme Toggle Button */
+.theme-toggle {
+    background: transparent;
+    border: 1px solid var(--glass-border);
+    color: var(--text-secondary);
+    cursor: pointer;
+    padding: 0.8rem;
+    border-radius: 50%;
+    transition: all 0.3s ease;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.theme-toggle:hover {
+    color: var(--accent);
+    background: rgba(255, 255, 255, 0.05);
+}
+
+.theme-toggle .icon-sun {
+    display: none;
+}
+
+body.theme-night .theme-toggle .icon-moon {
+    display: none;
+}
+
+body.theme-night .theme-toggle .icon-sun {
+    display: block;
+}
+
+.poem-nav {
+    flex-grow: 1;
+    overflow-y: auto;
+}
+
+.poem-nav::-webkit-scrollbar {
+    width: 4px;
+}
+.poem-nav::-webkit-scrollbar-thumb {
+    background: var(--glass-border);
+    border-radius: 4px;
+}
+
+.nav-list {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.nav-item a {
+    text-decoration: none;
+    color: var(--text-secondary);
+    font-size: 1.1rem;
+    padding: 1rem 1.2rem;
+    display: block;
+    border-radius: 12px;
+    transition: all 0.3s ease;
+    border: 1px solid transparent;
+}
+
+.nav-item a:hover {
+    background: rgba(255, 255, 255, 0.05);
+    color: var(--text-primary);
+    transform: translateX(5px);
+}
+
+.nav-item.active a {
+    background: rgba(255, 255, 255, 0.08);
+    color: var(--accent);
+    border: 1px solid var(--glass-border);
+}
+
+/* Main Content */
+.main-content {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+}
+
+.poem-card {
+    background-color: var(--glass-bg);
+    background-image: var(--card-texture);
+    background-blend-mode: overlay;
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border: 1px solid var(--glass-border);
+    border-radius: 24px;
+    padding: 4rem 6rem;
+    box-shadow: var(--glass-shadow);
+    transition: all 1s ease;
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.poem-card.fading {
+    opacity: 0;
+    transform: translateY(15px);
+    transition: opacity 0.5s ease, transform 0.5s ease;
+}
+
+.poem-header {
+    text-align: center;
+    margin-bottom: 4rem;
+    position: relative;
+}
+
+.poem-header::after {
+    content: '✦';
+    position: absolute;
+    bottom: -2.5rem;
+    left: 50%;
+    transform: translateX(-50%);
+    color: var(--accent);
+    font-size: 2rem;
+    opacity: 0.6;
+    transition: color 1s ease;
+}
+
+.poem-title {
+    font-family: 'Lora', serif;
+    font-size: 4rem; /* Large size from V2 */
+    font-weight: 500;
+    color: var(--text-primary);
+    margin-bottom: 0.5rem;
+    line-height: 1.1;
+    font-style: italic;
+    transition: color 1s ease;
+}
+
+.poem-subtitle {
+    font-family: 'Lora', serif;
+    font-size: 2rem;
+    font-style: italic;
+    color: var(--text-secondary);
+    font-weight: 400;
+    transition: color 1s ease;
+}
+
+.poem-body {
+    font-family: 'Lora', serif; /* Font from V3 */
+    font-size: 1.8rem; /* Large size from V2 */
+    line-height: 1.9;
+    color: var(--text-primary);
+    max-width: 800px;
+    margin: 0 auto;
+    transition: color 1s ease;
+}
+
+.stanza {
+    margin-bottom: 2.5rem;
+    white-space: pre-line;
+}
+
+/* Elegant Drop Cap */
+.stanza:first-child::first-letter {
+    float: left;
+    font-size: 5rem;
+    line-height: 0.8;
+    padding-top: 0.3rem;
+    padding-right: 0.8rem;
+    padding-left: 0.1rem;
+    color: var(--accent);
+    font-weight: 400;
+}
+
+.poem-footer {
+    text-align: right;
+    margin-top: 4rem;
+    font-style: italic;
+    color: var(--text-secondary);
+    font-family: 'Montserrat', sans-serif;
+    font-size: 1.2rem;
+    transition: color 1s ease;
+}
+
+/* Responsive */
+@media (max-width: 1200px) {
+    .layout {
+        gap: 2rem;
+    }
+}
+
+@media (max-width: 900px) {
+    .mobile-header {
+        display: flex;
+    }
+    
+    .layout {
+        flex-direction: column;
+        padding: 1.5rem;
+    }
+    
+    /* Mobile Sidebar - Off-canvas */
+    .sidebar {
+        position: fixed;
+        top: 0;
+        left: -100%;
+        width: 320px;
+        height: 100vh;
+        z-index: 100;
+        border-radius: 0;
+        border: none;
+        border-right: 1px solid var(--glass-border);
+        box-shadow: 5px 0 20px rgba(0,0,0,0.3);
+        margin: 0;
+        padding: 2rem 1.5rem;
+        transition: left 0.3s ease;
+    }
+    
+    .sidebar.open {
+        left: 0;
+    }
+    
+    .poem-card {
+        padding: 2.5rem;
+    }
+    
+    .poem-title {
+        font-size: 2.8rem;
+    }
+    
+    .poem-subtitle {
+        font-size: 1.5rem;
+    }
+    
+    .poem-body {
+        font-size: 1.4rem;
+    }
+    
+    .stanza:first-child::first-letter {
+        font-size: 4rem;
+    }
+}
