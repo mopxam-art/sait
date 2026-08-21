@@ -1,29 +1,12 @@
-const poems = [
-    {
-        title: 'Memento mori,',
-        subtitle: 'альбо Чаму не хоча паміраць беларус',
-        text: `Нават дзіўна: чакаю вечара\nЗ аксамітным зорным агнём,\nБыццам мне не хапае нечага\nГэтым жнівеньскім ясным днём.\n\nТам, далёка, ў касмічных высях\nПаляванне пачнуць Стральцы,\nІ Мядзведзіцы ў зорны прысак\nЗноў апусцяць свае каўшы.\n\nА з бясконцай Чумацкай Дарогі\nДанясецца зноў скрып палазоў –\nНевыказныя зыкі трывогі,\nАдгалоссе загадкавых слоў.\n\nНас завуць да сябе нашы продкі,\nЗапрашаюць у Вырай свой.\nІ штоночы іх сані-лодкі\nПрыплываюць за нечай душой.\n\nЯ яшчэ не магу, пачакайце,\nБолей часу мне мерыў лёс!..\nБацька, маці, даўжэй затрымайце\nЛя сябе майго лёсу воз…\n\nЛуг ля рэчкі яшчэ не скошаны,\nІ ля дома работы ёсць…\nВось на ганку прыступкі зношаны,\nА праз тыдзень у хату госць…\n\nНе трыбун, не палітык па званні,\nСвет не ўбачыць даўгоў маіх.\nАле ёсць і ў мяне абяцанні\nДля радні і сяброў сваіх…\n\nЦі пражыў я сваё, ці нацешыўся\nТым, што ў марах і ў планах было?\nІ ці здолеў я ўсіх усцешыць,\nШто са мною ішлі праз жыццё?\n\nЯ яшчэ не паспеў, пачакайце!\nБолей часу мне мерыў лёс…\nБацька, маці, даўжэй затрымайце\nЛя сябе мой апошні воз!\n\nСёння ўсё-ткі не збочыў з Дарогі,\nНе дайшоў той абоз да мяне…\nЗорка-знічка маёй трывогі\nДагарае ў рачной вадзе…\n\nЗрэдку думаем мы аб смерці\n( На зямлі ж нам не вечна быць! ),\nНе таму, каб спакойна памерці,\nДля таго, каб прыстойна жыць.`,
-        date: '2005 г.'
-    },
-    {
-        title: 'Фарбы восені',
-        subtitle: '',
-        text: `Самы багаты на колеры\nМесяц кастрычнік у нас.\nФарбамі ў садзе і ў полі\nВыткаўся дзіўны пейзаж.\n\nЯблыкаў чырвань у садзе.\nПожні зялёная рунь.\nПолымя жоўтых прысадаў –\nТонкіх бярозавых струн.\n\nБарва куста пры дарозе.\nНеба высокага сінь.\nЦёмныя дрэўцы ў аблозе\nГронак агністых рабін.\n\nЯрка-пунсовыя краскі\nДома пры родным акне.\nЗноў у чароўную казку\nДзіўная восень вядзе.\n\nБаль развітальны прыроды,\nСмутак і радасць зямлі.\nЖоўтых бяроз карагоды –\nДаўняга шчасця агні.`,
-        date: 'Кастрычнік'
-    },
-    {
-        title: 'Дарогамі Дзісеншчыны',
-        subtitle: '',
-        text: `Высокае неба над намі,\nЎ ім сонца, аблокі, прастор.\nІмчым мы крутымі шляхамі,\nІ неба нам сёння – шацёр.\n\nБяскрайнія побач абшары.\nУ квецені буйнай зямля.\nКустоўя зялёныя хмары,\nІ сініх лясоў паласа.\n\nСады, палісаднікі, хаты\nВясёлкавым ззяюць агнём.\nНапэўна, як госці, прыняты\nБылі б мы тут кожным дваром.\n\nІ хоць нетаропка, ды вечна\nПлыве побач з намі Дзісна.\nДа мора імкнецца спрадвечна\nЛюбімай радзімы рака.`,
-        date: ''
-    }
-];
+// Poem data is loaded from data.js
 
 const poemListEl = document.getElementById('poem-list');
 const titleEl = document.getElementById('poem-title');
 const subtitleEl = document.getElementById('poem-subtitle');
+const epigraphEl = document.getElementById('poem-epigraph');
 const bodyEl = document.getElementById('poem-body');
 const dateEl = document.getElementById('poem-date');
+const footnotesEl = document.getElementById('poem-footnotes');
 const wrapperEl = document.getElementById('poem-wrapper');
 const themeToggleBtn = document.getElementById('theme-toggle');
 
@@ -63,26 +46,59 @@ themeToggleBtn.addEventListener('click', () => {
 
 // Initialize Navigation
 function initNav() {
-    poems.forEach((poem, index) => {
-        const li = document.createElement('li');
-        li.className = `nav-item ${index === 0 ? 'active' : ''}`;
+    let isFirst = true;
+    let firstPoem = null;
+    let globalPoemIndex = 1;
+    
+    categories.forEach((category) => {
+        let container = poemListEl;
+        let details = null;
         
-        const a = document.createElement('a');
-        a.href = '#';
-        a.textContent = poem.title;
-        a.onclick = (e) => {
-            e.preventDefault();
-            document.querySelectorAll('.nav-list li').forEach(nav => nav.classList.remove('active'));
-            li.classList.add('active');
-            loadPoem(poem);
-        };
+        if (categories.length > 1) {
+            details = document.createElement('details');
+            details.className = 'nav-category';
+            
+            const summary = document.createElement('summary');
+            summary.textContent = category.title;
+            details.appendChild(summary);
+            container = details;
+        }
         
-        li.appendChild(a);
-        poemListEl.appendChild(li);
+        const ul = document.createElement('ul');
+        ul.className = 'nav-category-list';
+        
+        category.poems.forEach((poem) => {
+            if (isFirst) firstPoem = poem;
+            
+            const li = document.createElement('li');
+            li.className = `nav-item ${isFirst ? 'active' : ''}`;
+            
+            const a = document.createElement('a');
+            a.href = '#';
+            a.textContent = `${globalPoemIndex}. ${poem.title}`;
+            globalPoemIndex++;
+            a.onclick = (e) => {
+                e.preventDefault();
+                // Remove active class from all items
+                document.querySelectorAll('.nav-item').forEach(nav => nav.classList.remove('active'));
+                li.classList.add('active');
+                loadPoem(poem);
+            };
+            
+            li.appendChild(a);
+            ul.appendChild(li);
+            
+            isFirst = false;
+        });
+        
+        container.appendChild(ul);
+        if (details) {
+            poemListEl.appendChild(details);
+        }
     });
     
-    if (poems.length > 0) {
-        loadPoem(poems[0], true);
+    if (firstPoem) {
+        loadPoem(firstPoem, true);
     }
 }
 
@@ -96,10 +112,30 @@ function loadPoem(poem, initial = false) {
         subtitleEl.textContent = poem.subtitle || '';
         subtitleEl.style.display = poem.subtitle ? 'block' : 'none';
         
-        const stanzas = poem.text.split('\n\n').map(s => `<p class="stanza">${s}</p>`).join('');
+        if (poem.epigraph) {
+            epigraphEl.innerHTML = poem.epigraph.replace(/\n/g, '<br>');
+            epigraphEl.style.display = 'block';
+        } else {
+            epigraphEl.innerHTML = '';
+            epigraphEl.style.display = 'none';
+        }
+        
+        const stanzas = poem.text.split('\n\n').map(s => {
+            const hasTab = s.includes('\t');
+            const lines = s.replace(/\t/g, '').replace(/\n/g, '<br>');
+            return `<p class="stanza${hasTab ? ' indented' : ''}">${lines}</p>`;
+        }).join('');
         bodyEl.innerHTML = stanzas;
         
         dateEl.textContent = poem.date || '';
+        
+        if (poem.footnotes) {
+            footnotesEl.innerHTML = poem.footnotes.replace(/\n/g, '<br>');
+            footnotesEl.style.display = 'block';
+        } else {
+            footnotesEl.innerHTML = '';
+            footnotesEl.style.display = 'none';
+        }
         
         window.scrollTo({ top: 0, behavior: 'smooth' });
         closeMobileMenu(); // Close sidebar on mobile after selecting a poem
