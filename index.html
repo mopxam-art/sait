@@ -1,0 +1,1346 @@
+<!DOCTYPE html>
+<html lang="be">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Віктар Морхат - Вершы</title>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,500;1,400;1,500&family=Montserrat:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <style>
+:root {
+    /* Night Theme Variables (Default) */
+    --bg-color: #0b0c10;
+    --text-primary: #e0e6ed;
+    --text-secondary: #a0aab2;
+    --accent: #d4af37; /* Gold */
+    --glass-bg: rgba(20, 22, 28, 0.6);
+    --glass-border: rgba(255, 255, 255, 0.08);
+    --glass-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+    --bg-gradient: radial-gradient(circle at center, #1b202c 0%, #0b0c10 100%);
+    --particle-color: 255, 255, 255; /* Stars */
+}
+
+body.theme-day {
+    /* Day Theme Variables */
+    --bg-color: #f5f2eb;
+    --text-primary: #2c2a26;
+    --text-secondary: #6e6b66;
+    --accent: #8b5a2b; /* Warm brown/gold */
+    --glass-bg: rgba(255, 255, 255, 0.5);
+    --glass-border: rgba(139, 90, 43, 0.15);
+    --glass-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.05);
+    --bg-gradient: radial-gradient(circle at center, #ffffff 0%, #f5f2eb 100%);
+    --particle-color: 235, 175, 175; /* Petals/flowers */
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Montserrat', sans-serif; /* For UI */
+    color: var(--text-primary);
+    min-height: 100vh;
+    overflow-x: hidden;
+    line-height: 1.6;
+    transition: background-color 1s ease, color 1s ease;
+}
+
+.bg-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    z-index: -2;
+    background: var(--bg-gradient);
+    transition: opacity 1s ease, background 1s ease;
+}
+
+/* Background Particles Animation */
+.particles-bg {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    z-index: -1;
+    pointer-events: none;
+    background: transparent;
+}
+
+/* Top Header Elements */
+.top-header {
+    display: flex;
+    padding: 1rem 2rem;
+    background: var(--glass-bg);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border-bottom: 1px solid var(--glass-border);
+    align-items: center;
+    justify-content: space-between;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 1000;
+    gap: 1rem;
+    box-sizing: border-box;
+}
+
+.header-left, .header-right {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+}
+
+.header-brand {
+    display: flex;
+    flex-direction: row;
+    align-items: baseline;
+    gap: 1rem;
+}
+
+.mobile-title {
+    font-family: 'Lora', serif;
+    font-size: 2.2rem;
+    color: var(--accent);
+    font-weight: 500;
+    margin: 0;
+    line-height: 1.2;
+    white-space: nowrap;
+}
+
+.header-subtitle {
+    font-size: 0.85rem;
+    color: var(--text-secondary);
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    margin: 0;
+}
+
+.mobile-font-control {
+    margin: 0;
+}
+
+.mobile-font-control input[type="range"] {
+    width: 100px;
+}
+
+.menu-toggle {
+    background: transparent;
+    border: none;
+    color: var(--text-primary);
+    cursor: pointer;
+    padding: 0.5rem;
+    display: none;
+    align-items: center;
+    justify-content: center;
+}
+
+.mobile-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: 90;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s ease, visibility 0.3s ease;
+}
+
+.mobile-overlay.active {
+    opacity: 1;
+    visibility: visible;
+}
+
+/* Layout */
+.layout {
+    display: flex;
+    max-width: 1600px;
+    margin: 0 auto;
+    padding: 2rem;
+    padding-top: 6rem;
+    gap: 3rem;
+    min-height: 100vh;
+}
+
+/* Sidebar */
+.sidebar {
+    flex: 0 0 350px;
+    background: var(--glass-bg);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border: 1px solid var(--glass-border);
+    border-radius: 24px;
+    padding: 1.5rem 1rem 1.5rem 1.5rem;
+    box-shadow: var(--glass-shadow);
+    display: flex;
+    flex-direction: column;
+    height: calc(100vh - 8rem);
+    position: sticky;
+    top: 6rem;
+    transition: all 1s ease;
+}
+
+/* Theme Toggle Switch */
+.theme-toggle {
+    position: relative;
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid var(--glass-border);
+    cursor: pointer;
+    padding: 0.4rem 0.6rem;
+    border-radius: 30px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 72px;
+    height: 36px;
+    transition: all 0.3s ease;
+}
+
+.theme-toggle .icon-sun,
+.theme-toggle .icon-moon {
+    width: 16px;
+    height: 16px;
+    z-index: 2;
+    transition: all 0.3s ease;
+}
+
+.theme-toggle .icon-sun {
+    color: var(--accent);
+}
+
+.theme-toggle .icon-moon {
+    color: var(--text-secondary);
+}
+
+.theme-toggle .toggle-slider {
+    position: absolute;
+    top: 4px;
+    left: 4px;
+    width: 26px;
+    height: 26px;
+    background: rgba(255, 255, 255, 0.08);
+    border: 1px solid var(--glass-border);
+    border-radius: 50%;
+    transition: transform 0.3s cubic-bezier(0.4, 0.0, 0.2, 1);
+    z-index: 1;
+}
+
+body.theme-night .theme-toggle .toggle-slider {
+    transform: translateX(36px);
+}
+
+body.theme-night .theme-toggle .icon-sun {
+    color: var(--text-secondary);
+}
+
+body.theme-night .theme-toggle .icon-moon {
+    color: var(--accent);
+}
+
+.theme-toggle:hover .toggle-slider {
+    background: rgba(255, 255, 255, 0.15);
+}
+
+/* Font Size Control */
+.font-control {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    color: var(--text-secondary);
+}
+
+.font-control input[type="range"] {
+    -webkit-appearance: none;
+    width: 100px;
+    height: 4px;
+    background: var(--glass-border);
+    border-radius: 2px;
+    outline: none;
+}
+
+.font-decrease, .font-increase {
+    cursor: pointer;
+    user-select: none;
+    transition: color 0.2s ease;
+}
+
+.font-decrease:hover, .font-increase:hover {
+    color: var(--accent);
+}
+
+.font-control input[type="range"]::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    background: var(--accent);
+    cursor: pointer;
+    transition: transform 0.2s;
+}
+
+.font-control input[type="range"]::-webkit-slider-thumb:hover {
+    transform: scale(1.2);
+}
+
+.poem-nav {
+    flex-grow: 1;
+    overflow-y: auto;
+}
+
+.poem-nav::-webkit-scrollbar {
+    width: 4px;
+}
+.poem-nav::-webkit-scrollbar-thumb {
+    background: var(--glass-border);
+    border-radius: 4px;
+}
+
+.nav-list {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+.nav-category {
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+    padding-bottom: 1rem;
+}
+
+.nav-category summary {
+    cursor: pointer;
+    font-size: 1.1rem;
+    font-family: 'Lora', serif;
+    font-weight: 500;
+    color: var(--text-primary);
+    margin-bottom: 0.8rem;
+    padding: 0.5rem 0;
+    transition: color 0.3s ease;
+    list-style: none; /* Hide default arrow in some browsers */
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.nav-category summary::-webkit-details-marker {
+    display: none; /* Hide default arrow in WebKit */
+}
+
+.nav-category summary::after {
+    content: '▾';
+    font-size: 1.2rem;
+    color: var(--accent);
+    transition: transform 0.3s ease;
+}
+
+.nav-category[open] summary::after {
+    transform: rotate(-180deg);
+}
+
+.nav-category summary:hover {
+    color: var(--accent);
+}
+
+.nav-category-list {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    padding-left: 0.5rem;
+}
+
+.nav-item a {
+    text-decoration: none;
+    color: var(--text-secondary);
+    font-size: 1rem;
+    padding: 0.8rem 1.2rem;
+    display: block;
+    border-radius: 12px;
+    transition: all 0.3s ease;
+    border: 1px solid transparent;
+}
+
+.nav-item a:hover {
+    background: rgba(255, 255, 255, 0.05);
+    color: var(--text-primary);
+    transform: translateX(5px);
+}
+
+.nav-item.active a {
+    background: rgba(255, 255, 255, 0.08);
+    color: var(--accent);
+    border: 1px solid var(--glass-border);
+}
+
+/* Main Content */
+.main-content {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+}
+
+.poem-card {
+    background-color: var(--glass-bg);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border: 1px solid var(--glass-border);
+    border-radius: 24px;
+    padding: 4rem 6rem;
+    box-shadow: var(--glass-shadow);
+    transition: all 1s ease;
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.poem-card.fading {
+    opacity: 0;
+    transform: translateY(15px);
+    transition: opacity 0.5s ease, transform 0.5s ease;
+}
+
+.poem-header {
+    text-align: center;
+    margin-bottom: 4rem;
+    position: relative;
+    z-index: 1;
+}
+
+.poem-header::after {
+    content: '✦';
+    position: absolute;
+    bottom: -2.5rem;
+    left: 50%;
+    transform: translateX(-50%);
+    color: var(--accent);
+    font-size: 2rem;
+    opacity: 0.6;
+    transition: color 1s ease;
+}
+
+.poem-header {
+    text-align: center;
+    margin-bottom: 2rem;
+}
+
+.poem-title {
+    font-family: 'Lora', serif;
+    font-size: 4rem; /* Large size from V2 */
+    font-weight: 500;
+    color: var(--text-primary);
+    margin-bottom: 0.5rem;
+    line-height: 1.1;
+    font-style: italic;
+    transition: color 1s ease;
+}
+
+.poem-subtitle {
+    font-family: 'Lora', serif;
+    font-size: 2rem;
+    font-style: italic;
+    color: var(--text-secondary);
+    font-weight: 400;
+    transition: color 1s ease;
+}
+
+.poem-epigraph {
+    font-style: italic;
+    text-align: right;
+    font-size: 1.3rem;
+    color: var(--text-secondary);
+    opacity: 0.9;
+    margin-top: 2rem;
+    margin-bottom: 2rem;
+    margin-left: auto;
+    width: auto;
+    max-width: 90%;
+    border-right: 2px solid var(--accent);
+    padding-right: 1.5rem;
+    line-height: 1.6;
+}
+
+.poem-footnotes {
+    font-family: 'Lora', serif;
+    font-style: italic;
+    font-size: 1rem;
+    color: var(--text-secondary);
+    opacity: 0.8;
+    border-top: 1px solid var(--glass-border);
+    padding-top: 1.5rem;
+    margin-top: 3rem;
+    line-height: 1.6;
+    text-align: left;
+}
+
+.poem-body {
+    font-family: 'Lora', serif; /* Font from V3 */
+    font-size: var(--poem-font-size, 1.8rem);
+    line-height: 1.9;
+    color: var(--text-primary);
+    max-width: 800px;
+    margin: 0 auto;
+    transition: color 1s ease, font-size 0.2s ease;
+}
+
+.stanza.part-number {
+    font-family: 'Lora', serif;
+    font-style: italic;
+    color: var(--accent);
+    text-align: center;
+    margin-top: 3rem;
+    margin-bottom: 1.5rem;
+}
+
+.stanza {
+    margin-bottom: 2rem;
+}
+
+.stanza.indented {
+    margin-left: 3rem;
+}
+.stanza {
+    white-space: pre-line;
+}
+
+/* Raised Cap instead of Drop Cap */
+.stanza:first-child::first-letter {
+    font-size: 4.2rem;
+    color: var(--accent);
+    font-weight: 400;
+    line-height: 1;
+    margin-right: 0.2rem;
+}
+
+.poem-footer {
+    text-align: right;
+    margin-top: 4rem;
+    font-style: italic;
+    color: var(--text-secondary);
+    font-family: 'Montserrat', sans-serif;
+    font-size: 1.2rem;
+    transition: color 1s ease;
+}
+
+.poem-date {
+    text-align: right;
+    margin-top: 2rem;
+    font-style: italic;
+    color: var(--text-secondary);
+    font-family: 'Montserrat', sans-serif;
+    font-size: 1.1rem;
+    opacity: 0.8;
+}
+
+/* Responsive */
+@media (max-width: 1200px) {
+    .layout {
+        gap: 2rem;
+    }
+}
+
+@media (max-width: 900px) {
+    .menu-toggle {
+        display: flex;
+    }
+    .header-brand {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 0;
+    }
+    .mobile-title {
+        font-size: 1.4rem;
+        white-space: normal;
+    }
+    .header-subtitle {
+        display: none;
+    }
+    .top-header {
+        padding: 0.8rem 0.5rem;
+        gap: 0.5rem;
+    }
+    .header-left, .header-right {
+        gap: 0.5rem;
+    }
+    .mobile-font-control input[type="range"] {
+        width: 60px;
+    }
+    
+    .layout {
+        flex-direction: column;
+        padding: 5rem 1.5rem 1.5rem 1.5rem;
+    }
+    
+    /* Mobile Sidebar - Off-canvas */
+    .sidebar {
+        position: fixed;
+        top: 0;
+        left: -100%;
+        width: 320px;
+        height: 100vh;
+        z-index: 100;
+        border-radius: 0;
+        border: none;
+        border-right: 1px solid var(--glass-border);
+        box-shadow: 5px 0 20px rgba(0,0,0,0.3);
+        margin: 0;
+        padding: 6rem 1.5rem 2rem 1.5rem;
+        transition: left 0.3s ease;
+    }
+    
+    .sidebar.open {
+        left: 0;
+    }
+    
+    .poem-card {
+        padding: 2.5rem;
+    }
+    
+    .poem-title {
+        font-size: 2.8rem;
+    }
+    
+    .poem-subtitle {
+        font-size: 1.5rem;
+    }
+    
+    .poem-body {
+        /* font-size controlled by CSS var */
+    }
+    
+    .stanza:first-child::first-letter {
+        font-size: 4rem;
+    }
+}
+
+@media (max-width: 600px) {
+    .poem-card {
+        padding: 1.5rem;
+    }
+    .poem-title {
+        font-size: 2.2rem;
+    }
+    .poem-subtitle {
+        font-size: 1.2rem;
+    }
+    .drop-cap {
+        font-size: 3rem;
+        padding-right: 0.5rem;
+    }
+    .drop-cap::after {
+        font-size: 0.8rem;
+        top: -5px;
+    }
+    .stanza.part-number {
+        font-size: 1.5rem;
+    }
+    .poem-epigraph {
+        font-size: 0.95rem;
+    }
+    .poem-date {
+        font-size: 1rem;
+    }
+    .poem-footnotes {
+        font-size: 0.9rem;
+    }
+}
+
+</style>
+</head>
+<body class="theme-day">
+    <!-- Background Canvas for dynamic particles -->
+    <canvas id="particles-canvas" class="particles-bg"></canvas>
+    
+    <!-- Background Overlay for dynamic gradients -->
+    <div id="bg-overlay" class="bg-overlay"></div>
+
+    <!-- Global Header -->
+    <header class="top-header">
+        <div class="header-left">
+            <button id="menu-toggle" class="menu-toggle" aria-label="Адкрыць меню">
+                <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
+            </button>
+            <div class="header-brand">
+                <h1 class="mobile-title">Віктар Морхат</h1>
+                <p class="header-subtitle">Паэтычны архіў</p>
+            </div>
+        </div>
+        <div class="header-right">
+            <button id="theme-toggle" class="theme-toggle" aria-label="Пераключыць тэму">
+                <div class="toggle-slider"></div>
+                <svg class="icon-sun" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg>
+                <svg class="icon-moon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>
+            </button>
+            <div class="font-control mobile-font-control" aria-label="Памер шрыфта">
+                <span class="font-decrease" style="font-size: 0.9rem">A</span>
+                <input type="range" class="font-slider" min="0.8" max="2.4" step="0.1" value="1.8" aria-label="Рэгуляваць памер шрыфта">
+                <span class="font-increase" style="font-size: 1.4rem">A</span>
+            </div>
+        </div>
+    </header>
+
+    <!-- Mobile Overlay -->
+    <div id="mobile-overlay" class="mobile-overlay"></div>
+
+    <div class="layout">
+        <!-- Sidebar Navigation -->
+        <aside class="sidebar" id="sidebar">
+            
+            <nav class="poem-nav">
+                <ul class="nav-list" id="poem-list">
+                    <!-- Nav items will be generated by JS -->
+                </ul>
+            </nav>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <article class="poem-card" id="poem-wrapper">
+                <header class="poem-header">
+                    <h2 class="poem-title" id="poem-title"></h2>
+                    <h3 class="poem-subtitle" id="poem-subtitle"></h3>
+                    <div class="poem-epigraph" id="poem-epigraph"></div>
+                </header>
+                
+                <div class="poem-body" id="poem-body">
+                    <!-- Poem content will be injected by JS -->
+                </div>
+                <div class="poem-date" id="poem-date"></div>
+                <div class="poem-footnotes" id="poem-footnotes"></div>
+            </article>
+        </main>
+    </div>
+
+    <script>
+const categories = [
+    {
+        "title": "Лірычныя",
+        "poems": [
+            {
+                "title": "Фарбы восені",
+                "subtitle": "",
+                "epigraph": "",
+                "text": "Самы багаты на колеры\nМесяц кастрычнік у нас.\nФарбамі ў садзе і ў полі\nВыткаўся дзіўны пейзаж.\n\nЯблыкаў чырвань у садзе.\nПожні зяленая рунь.\nПолымя жоўтых прысадаў –\nТонкіх бярозавых струн.\n\nБарва куста пры дарозе.\nНеба высокага сінь.\nЦёмныя дрэўцы ў аблозе\nГронак агністых рабін.\n\nЯрка-пунсовыя краскі\nДома пры родным акне.\nЗноў у чароўную казку\nДзіўная восень вядзе.\n\nБаль развітальны прыроды,\nСмутак і радасць зямлі.\nЖоўтых бяроз карагоды –\nДаўняга шчасця агні.",
+                "date": "",
+                "footnotes": ""
+            },
+            {
+                "title": "Вось і зноў халады…",
+                "subtitle": "",
+                "epigraph": "",
+                "text": "Вось і зноў халады… Над палямі маўклівымі\nЖуравоў клін самотны у вырай плыве.\nПрацінае душу адчуванне шчымлівае:\nНа іх крылах сплываюць апошнія мроі мае…\n\nВыпадкова прыходзім мы ў свет гэты белы,\nАбжываем яго паччуццём трапяткім.\nА ў юнацтве пасля называем ўжо смела\nГэты свет непаўторным, адзіным, сваім.\n\nМаладыя гады абяцаюць так многа…\nУсё хочацца бачыць у полымі зор.\nХоць адорыць жыццё нас і скупа і строга,\nЗастануцца жаданымі воля, надзея, прастор.\n\nСаграваюць душу нам іскрынкі надзеі,\nШто зайграюць фанфары ў часы перамог,\nШто дасць лёс нам узлёт, вышыню і падзеі,\nІ бязмежную волю шчаслівых дарог.\n\nПралятаюць гады. Іх пражыта нямала.\nЗа смугою гадоў наш юнацкі парог.\nДзякуй лёсу за ўсё, і прасі, каб душа не праспала\nВышыню, і узлёт, і бязмежную волю дарог.\n\nАдыйшло, адцвіло, адарвалася крыгай,\nМнога мараў заглухла ў чаканні пустым…\nЧас збірацца і нам ў недалёкі ўжо вырай.\nЦягам часу мы сыйдзем туды па адным…\n\nВось і зноў халады… Над палямі маўклівымі\nЖуравоў клін самотны у вырай плыве.\nПрацінае душу адчуванне шчымлівае:\nАдплываюць у вечнасць спадзевы мае…",
+                "date": "",
+                "footnotes": ""
+            },
+            {
+                "title": "Дарогамі Дзісеншчыны",
+                "subtitle": "",
+                "epigraph": "",
+                "text": "Высокае неба над намі,\nЎ ім сонца, аблокі, прастор.\nІмчым мы крутымі шляхамі,\nІ неба нам сёння – шацёр.\n\nБяскрайнія побач абшары.\nУ квецені буйнай зямлля.\nКустоўя зялёныя хмары,\nІ сініх лясоў паласа.\n\nСады, палісаднікі, хаты\nВясёлкавым ззяюць агнём.\nНапэўна, як госці, прыняты\nБылі б мы тут кожнным дваром.\n\nІ хоць нетаропка, ды вечна\nПлыве побач з намі Дзісна.\nДа мора імкнецца спрадвечна\nЛюбімай радзімы рака.\n\nА лёсы людзей майго краю,\nЯкія жывуць сярод нас…\nГісторыі кнігу чытаем,\nЯк чуем іх просты расказ.\n\nГісторыя робіцца блізкай,\nАхвяры, героі яе…\nНам прзвішчы на абелісках –\nСуровы ўспамін аб вайне…\n\nНашчадкі былых пакаленняў,\nНам спадчынай гэта зямля!\nМацнее ў душы пакланенне,\nСвятыняй нам будзе яна.",
+                "date": "",
+                "footnotes": ""
+            },
+            {
+                "title": "Гэй, хто з намі?!",
+                "subtitle": "",
+                "epigraph": "",
+                "text": "Нехта едзе на мора,\nНехта ў лес па грыбы.\nМы з сябрамі – на ровар,\nІ далей ад нуды!\n\nЯркай стужкай дарога\nПерад намі бяжыць,\nНезвычайнага многа\nАбяцае адкрыць\n\nТут за кожным пагоркам\nНовы край-далягляд.\nВечаровая зорка\nНас не верне назад.\n\nНехта едзе на мора,\nНехта ў лес па грыбы.\nМы з сябрамі – на ровар,\nІ далей ад нуды!\nГэй, хто з намі?! –\nНа ровар –\nІ далей ад нуды!",
+                "date": "",
+                "footnotes": ""
+            },
+            {
+                "title": "Гэй, хто з намі ?! (Філасофскі варыянт)",
+                "subtitle": "",
+                "epigraph": "Варыянт другі, пашыраны, філасофскі",
+                "text": "\nНехта едзе на мора,\nНехта ў лес па грыбы.\nМы з сябрамі – на ровар,\nІ далей ад нуды!\n\nЯркай стужкай дарога\nПерад намі бяжыць,\nНезвычайнага многа\nАбяцае адкрыць\n\nТут за кожным пагоркам\nНовы край-далягляд.\nВечаровая зорка\nНас не верне назад.\n\nНехта едзе на мора,\nНехта ў лес па грыбы.\nМы з сябрамі – на ровар,\nІ далей ад нуды!\nГэй, хто з намі? –\nНа ровар –\nІ далей ад нуды!\n\nАд застою-запою\nШэрай шэрасці дзён\nМы сваёй галавою\nПаратунак найдзём.\n\nАд экранных “пападаў”\nІ халтуры-маны\nХай ратуе нас праўда,\nЛес, дарога, сябры.\n\n\nАд занудлівых спрэчак,\nАд “цэ. у “ на штодзень\nДа чароўных да рэчак\nМчым каторы ўжо дзень.\n\nНехта едзе на мора,\nНехта ў лес па грыбы.\nМы з сябрамі – на ровар,\nІ далей ад нуды!\n\nМожа хто ў Дон-Кіхоты\nХоча нас запісаць?\nГэтай славы высокай\nСцяг гатовы узняць.\n\nНе часовай карысці\nВыпадковых выгод!\nДа вышэйшых мы ісцін\nПачынаем паход.\n\nНехта едзе на мора,\nНехта ў лес па грыбы,\nМы з сябрамі – на ровар,\nІ далей ад нуды!\n\nГэй, хто з намі? -\nНа ровар -\nІ далей ад нуды!",
+                "date": "Чэрвень 2004 г., в. Зорка.",
+                "footnotes": ""
+            },
+            {
+                "title": "Зямля бацькоў",
+                "subtitle": "",
+                "epigraph": "500-годдзю Шаркаўшчыны прысвячаецца",
+                "text": "Малая радзіма – дзяцінства зямля,\nМілейшага ў свеце не знаю!\nСваю цеплыню ты мне дорыш спаўна,\nА я цябе песняй вітаю.\n\nГэта зямля бацькоў\nСпадчынай нам застанецца.\nНад прыгажуняй Дзісной\nБыць нашай Шаркоўшчыне вечна!\n\nРупная праца маіх землякоў\nСлавай вядома ў народзе.\nПраца і творчасць…У душах бацькоў\nНеба з зямлёю у згодзе.\n\nУ лютых пажарах апошняй вайны,\nРатуючы свет і краіну,\nЖыццё баранілі мае землякі,\nЗагойвалі раны Радзімы.\n\nДарога у даль бяжыць,\nСонца глядзіцца у вочы.\nУ роднай старонцы нам жыць,\nБудуючы дом свій моцны.\n\nМова, і песня. І хлеб –\nЎсё нашае тут спрадвеку.\nГодны пакінуць след…\nШто трэба яшчэ чалавеку?\n\nГэта зямля бацькоў\nСпадчынай нам застанецца.\nНад прыгажуняй Дзісной\nБыць нашай Шаркоўшчыне вечна!",
+                "date": "",
+                "footnotes": ""
+            },
+            {
+                "title": "Творчасць",
+                "subtitle": "Санет",
+                "epigraph": "Пачынаючы верш, паэт, як правіла, не ведае, чым\nён закончыцца, і часам бывае вельмі здзіўлены тым, што атрымалася, бо часта атрымоўваецца лепш, чым ён разлічваў, думка яго сягае далей…\nЗ Нобелеўскай лекцыі Іосіфа Бродскага.",
+                "text": "Я не люблю у вершах даўжыні,\nЎ якой і сэнс, і думка  тоне.\nШматслоўе не заменіць глыбіні,\nХоць і прыдасць тварэнню від прыстойны.\n\nПарой здаецца, што мае радкі\nЎжо існуюць у сховішчах падземных,\nІ трэба выдаліць баласт з руды,\nКаб адрадзіўся верш, да часу патаемны.\n\nАдсекчы лішняе, як скульптар гаварыў,\nСкарбонку слоў праверыць пільна…\nЦярпенне мець, не кідаць у прарыў\nШкарлупкі вобразаў замшэла-пыльных…\n\nСапраўдны майстра там шэдэўр тварыў,\nДзе шмат хто адступаўся у бяссіллі.",
+                "date": "",
+                "footnotes": ""
+            },
+            {
+                "title": "Угледзься ў прыгажосць",
+                "subtitle": "Санет",
+                "epigraph": "",
+                "text": "\nПасля дажджу ў траве стракочуць конікі.\nАд дзённай спёкі ўратавалася трава.\nІ скачуць ў ёй зялёныя дуронікі,\nІм не баліць аб іншым галава.\n\nПчале ўжо не ляцець да кветак болей –\nПрацаўнікам няўдзячны сёння выпаў лёс.\nНа час які камбайн спыніўся ў полі,\nУ некага пракос ля рэчкі не дасох.\n\nНа сёння ўсё. Адкінь жа звычны клопат.\nАле не закрывай прытомленых павек.\nУгледзься ў прыгажосць, бо ты ж не робат,\nІрвіся з шэрасці будзённай, чалавек!\n\nЗ прыродай нашаю пабудзь ты гэтым часам…\nА днямі для работ цябе адорыць век.",
+                "date": "",
+                "footnotes": ""
+            },
+            {
+                "title": "Травы, ўспаміны, сны…",
+                "subtitle": "",
+                "epigraph": "",
+                "text": "Доўгія цёмныя цені\nКрэсляць зялёны луг.\nСонечных блёсткаў адценні\nТвораць чароўны круг.\n\nЛетняга вечара ціша.\nСонца ля дальняй мяжы.\nВетрык лагодны калыша\nТравы, ўспаміны, сны…\n\nЎсё гарманічна і проста,\nСветлай спавіта тугой:\nДзён нашых тайныя кросны\nДораць нам зрэдку спакой.\n\nКажуць, што ўсё паўтараецца,\nНедзе ўсплыве праз гады…\nХай і тады так злучаецца:\nТравы… Ўспаміны… Сны…",
+                "date": "Верасень 2006 г.",
+                "footnotes": ""
+            },
+            {
+                "title": "Memento mori",
+                "subtitle": "альбо Чаму не хоча паміраць беларус",
+                "epigraph": "",
+                "text": "Нават дзіўна: чакаю вечара\nЗ аксамітным зорным агнём,\nБыццам мне не хапае нечага\nГэтым жнівеньскім ясным днём.\n\nТам, далёка, ў касмічных высях\nПаляванне пачнуць Стральцы,\nІ Мядзведзіцы ў зорны прысак\nЗноў апусцяць свае каўшы.\n\nА з бясконцай Чумацкай Дарогі\nДанясецца зноў скрып палазоў –\nНевыказныя зыкі трывогі,\nАдгалоссе загадкавых слоў.\n\nНас завуць да сябе нашы продкі,\nЗапрашаюць у Вырай свой.\nІ штоночы іх сані-лодкі\nПрыплываюць за нечай душой.\n\nЯ яшчэ не магу, пачакайце,\nБолей часу мне мерыў лёс!..\nБацька, маці, даўжэй затрымайце\nЛя сябе майго лёсу воз…\n\nЛуг ля рэчкі яшчэ не скошаны,\nІ ля дома работы ёсць…\nВось на ганку прыступкі зношаны,\nА праз тыдзень у хату госць…\n\nНе трыбун, не палітык па званні,\nСвет не ўбачыць даўгоў маіх.\nАле ёсць і ў мяне абяцанні\nДля радні і сяброў сваіх…\n\nЦі пражыў я сваё, ці нацешыўся\nТым, што ў марах і ў планах было?\nІ ці здолеў я ўсіх усцешыць,\nШто са мною ішлі праз жыццё?\n\nЯ яшчэ не паспеў, пачакайце!\nБолей часу мне мерыў лёс…\nБацька, маці, даўжэй затрымайце\nЛя сябе мой апошні воз!\n\nСёння ўсё-ткі не збочыў з Дарогі,\nНе дайшоў той абоз да мяне…\nЗорка-знічка маёй трывогі\nДагарае ў рачной вадзе…\n\nЗрэдку думаем мы аб смерці\n( На зямлі ж нам не вечна быць! ),\nНе таму, каб спакойна памерці,\nДля таго, каб прыстойна жыць.",
+                "date": "2005 г.",
+                "footnotes": "Memento mori (лац.) – Помні аб смерці. Лацінскі выраз з сэнсам: помні аб смерці, каб прыстойна жыць.\nСтралец(Стральцы), Мядзведзіцы – нябесныя сузор’і.\nЧумацкі Шлях – народная назва Млечнага Шляху.\nВырай – у беларускай міфалагічнай традыцыі – старажытная назва раю і райскага сусветнага дрэва, у вяршынях якога жывуць птушкі і душы памерлых."
+            },
+            {
+                "title": "Апошні раз звініць званок",
+                "subtitle": "",
+                "epigraph": "Дачцэ Марыі і яе аднакласнікам, выпускнікам 2007 г.,                               прысвячаецца.",
+                "text": "Ўсё пачынаецца са школ:\nЖыцця пазнанне і дарогі\nЎ шырокі свет, які вакол,\nЎ якім надзеі і трывогі.\n\nА сілу крылаў, каб ўзляцець,\nДала вам школа.\nЗапомні ж школьных клёнаў медзь,\nСяброўства кола.\n\nЗапомні ты як дом другі\nУ Зорцы школу –\nКуточак родны, дарагі\nЎ жыцця прасторах.\n\nБо пачынаецца са школ\nЖыцця пазнанне і дарогі\nЎ шырокі свет, які вакол,\nЎ якім надзеі і трывогі.\n\nШырокі свет хай стрэне вас\nНе цёмнай хмарай,\nДабром сустрэне ў добры час\nІ здзейсніць мары.\n\nДля вас у вашым класе.\nДы не канчаецца урок,\nЁн доўжыцца у часе…\n\nБо пачынаецца са школ\nЖыццё, надзеі і трывогі,\nШырокі свет, які вакол,\nЎ якім шчаслівыя дарогі.",
+                "date": "",
+                "footnotes": ""
+            },
+            {
+                "title": "Я хацеў бы…",
+                "subtitle": "",
+                "epigraph": "",
+                "text": "Мы ідзём па размечанай трасе.\nШлях памечаны лентай гадоў.\nЯ хацеў бы згубіцца у часе,\nКаб сустрэцца з табою ізноў…\n\nМы сяброўства цанілі высока,\nМы каханне умелі дарыць,\nІ да зорнай, да ночы глыбокай\nЯ хацеў бы з табой гаварыць…\n\nДы, на жаль, цягнікі так не ходзяць,\nСамалёты лятуць не туды…\nТолькі памяць, бывае, нас водзіць\nСном чароўным у тыя гады,\n\nДзе сяброўства цанілі высока,\nДзе каханне умелі дарыць,\nДзе да зорнай, да ночы глыбокай\nЯ хацеў бы з табой гаварыць …\n\nТам задумы і мары мы здзейснілі б,\nРазгадалі б галоўны сакрэт,\nІ жыццё, зноў жыццё напрадвесні,\nМы расквецілі б яснасцю мэт.\n\nМы ідзём па размечанай трасе,\nЗа плячыма ўжо многа гадоў…\nЯ хацеў бы згубіцца у часе,\nКаб сустрэцца з табою ізноў…\n\nПраз гады я хацеў бы пранесці\nЦеплынню тых  юначых гадоў…\nБыццам зноў мы з табой напрадвесні,\nНа парозе жыццёвых шляхоў.",
+                "date": "",
+                "footnotes": ""
+            },
+            {
+                "title": "Мэтай узвысіў жыццё",
+                "subtitle": "",
+                "epigraph": "Вітольду Антонавічу Ермалёнку з Мёр і яго\nархеалагічна-краязнаўчаму клубу “Арганаўты мінулага”\nпрысвячаецца",
+                "text": "\nДобра таму, хто здолеў\nМэтай узвысіць жыццё,\nШэрыя будні адолеў,\nСлова сказаў сваё.\n\nЯк арганаўтам праз моры\nТрэба было плысці,\nТрэба некаму зрушыць горы,\nКаб адкрыць, захаваць, знайсці.\n\nЎ курганах пахавана гісторыя\nКраю нашага за вякі.\nТут славутых падзей тэрыторыя\nІ няўдач ракавых камяні.\n\nРазбураць яшчэ трэба горы\nЗакарэлай чужой хлусні\nПра высокія нашы зоры\nІ спрадвечныя карані.\n\nЎ курганах, на архіўных паліцах,\nНа гарышчах сядзібаў старых\nСкарб галоўны таемна зіхціцца,\nАрганаўтаў чакае тваіх.\n\nХто ўжо зведаў шукальніка долю,\nЗразумее той слова маё:\nДобра таму, хто здолеў\nМэтай узвысіць жыццё.",
+                "date": "2016 г., в. Зорка",
+                "footnotes": ""
+            },
+            {
+                "title": "Маладыя гады",
+                "subtitle": "",
+                "epigraph": "",
+                "text": "Я прыеду сюды,\nКаб сустрэцца з сябрамі,\nКаб пазбыцца тугі,\nШто прыходзіць начнымі часамі.\n\nНашы шпаркія коні-гады\nПерабеглі ўжо рысу “за сорак”.\nМы цяпер ўжо не так, як тады,\nЎ маладыя гады,\nСустракаем свой ранішні золак.\n\nО, не так, як тады,\nЎ маладыя гады,\nКалі неба вышэй,\nКалі сонца ярчэй,\nА сяброўства мацней за выгоды.\n\nВечны клопат цяпер у жыцці\nПра сям’ю, і даўгі, і работу.\nПадрастаюць сыны…\nПадрастаюць сыны\nІ глядзяць на бацькоў ўжо звысоку,\nЯк калісьці і мы.\n\nЯк калісьці і мы\nУ свае маладыя гады,\nКалі неба вышэй,\nКалі сонца ярчэй,\nА сяброўства мацней за выгоды.\n\nІм сваёю дарогай ісці,\nПамыляцца, шукаць і знаходзіць…\nМы не будзем зайдросціць, сябры:\nХай шукаюць яны,\nХай знаходзяць яны,\nЯк калісьці і мы…\n\nЯк калісьці і мы\nУ свае маладыя гады,\nКалі неба вышэй,\nКалі сонца ярчэй,\nА сяброўства мацней за выгоды.",
+                "date": "",
+                "footnotes": ""
+            },
+            {
+                "title": "Прыедзьце на сустрэчу!",
+                "subtitle": "",
+                "epigraph": "",
+                "text": "Не шмат мінулага прыкмет,\nІ клопат іншы думкі поўніць.\nАле яшчэ не сцёрся след,\nЯшчэ усіх нас можна ўспомніць.\n\nКаб стала крышачку цяплей\nЎ студзёным свеце, --\nСяброўства з часам даражэй, –\n\nСтамляе нас будзённы дзень,\nКалі жывём без мэты.\nХай дойдзе радасці прамень\nЗ чароўнай метай:\n\n“Сяброўства з часам даражэй –\nПрыедзьце на сустрэчу,\nКаб стала крышачку цяплей\nНа белым свеце…”\n\nУ многіх, мусіць, ўнукі ёсць,\nПавырасталі дзеці…\nСвайму юнацтву будзеш госць.\nПрыедзь жа на сустрэчу!\n\nХай стане крышачку цяплей\nНа гэтым свеце\nСяброўства з часам даражэй.\nПрыедзь жа на сустрэчу!",
+                "date": "08. 12. 2004 г.",
+                "footnotes": ""
+            },
+            {
+                "title": "Роздум перад сустрэчай",
+                "subtitle": "",
+                "epigraph": "",
+                "text": "Цягнік бяжыць праз ноч,\nПра штось такочуць колы.\nА сон злятае з воч,\nХоць цішыня ў вагоне.\n\n\tЗа вокнамі ізноў\n\tЗнаёмая дарога…\n\tПульсуе ў скронях кроў\n\tІ думак, думак многа…\n\nМайго юнацтва час\nЗвязаны з Мінскам.\nГадоў жалезны прас\n“Стрыжэ” даволі нізка.\n\n\tЁн з памяці людзей\n\t( Маёй таксама ),\n\tСцірае шмат падзей,\n\tРазмыта панарама…\n\nНа ёй пад прасам тым\nУсё не так дэтальна.\nНе кожны успамін\nГлядзіцца эпахальна.\n\n\tУмоўны знак-імя,\n\tБывае, сцёрты,\n\tНяма і назвы дня.\n\tІ дзён такіх – кагорты…\n\nНяўмольны час ляціць\n( Ну што тут зробіш! ).\nДай, памяць, аднавіць,\nШто ў яве не адродзіш…\n\n\tНаш родны інстытут\n\t( Віват і шанаванне! )\n\tНастаўніцкі маршрут\n\tАкрэсліў звышрэальна.\n\nУ кожнага быў ўзлёт,\nХвіліны дасягненняў,\nКрышылі страху лёд\nШчаслівыя імгненні.\n\n\tЖылі, як і бацькі,\n\tПад зоркай звычаёвай…\n\tЦі думаць мы маглі\n\tАб зменах эры новай?!\n\nШчаслівыя ўжо тым,\nШто кроў Чачні, Афгана\nРавеснікам маім\nЖыцця не перарвала.\n\n\tГаркотны прысмак ёсць:\n\tНе тое збудавалі,\n\tНа зломе дзвюх эпох\n\tЧужое падтрымалі…\n\nДзяўчаткі тых гадоў,\nНапэўна, ўжо бабулі.\nСыны хлапцоў-сяброў\nСвой, мусіць, маюць вулей…\n\n\tЗастаўся ж назаўжды\n\tЮнацтва водар.\n\tМне сняцца праз гады\n\tЛюбімых твараў вочы.\n\nЗа вокнамі ізноў\nЗнаёмая дарога.\nПульсуе ў скронях кроў\nІ  думак, думак многа…",
+                "date": "2004 г., чэрвень",
+                "footnotes": ""
+            },
+            {
+                "title": "А мемуары з нечага пісаць…",
+                "subtitle": "Санет лірычна-іранічны",
+                "epigraph": "…и тратить мощь свою\nНа подвиг прозябанья…\nПоль Верлен",
+                "text": "Мы не кляліся пакарыць сусвет\nІ клятваў Ганібальскіх не давалі.\nЗвычайнага жыцця някідкі след\nУ звычнай каляіне мы праклалі.\n\nПарой, бывае, воблачка тугі\nЖурбой сумніву сэрца сцісне:\nКаб зоркі іншыя і іншыя кругі,\nІнакшае з дурнот жыцця шукаў бы выйсце…\n\nДык хай даюць ацэнку старцы-мудрацы,\nШто судзяць ўсіх і ўсё так строга:\nСтаіць той дом, дзе выраслі сыны,\nІ дрэвы ёсць ля дома тога…\n\nА зоркі знеба не нам хапаць.\nТаму і мемуары з нечага пісаць…",
+                "date": "2002 г.",
+                "footnotes": ""
+            },
+            {
+                "title": "Роздум пасля сустрэчы",
+                "subtitle": "",
+                "epigraph": "…и мало-помалу мне почему-то начинает казаться, что обо мне тоже вспоминают, меня ждут и что мы встретимся…\nА. П. Чехов « Дом с мезонином»",
+                "text": "\nЛанцуг штодзённай звычнай справы,\nЛанцуг будзёншчыны і страт…\nІ гэтым колам, божа правы,\nЯк засланіўся далягляд!\n\nЖыцця ці многа застаецца,\nМы пачынаем ўжо старэць…\nІ кожны з нас цяпер імкнецца\nНа шлях свой пільна паглядзець,\n\nКаб ў тым жыцці, што засталося,\nЯкое можна нам дажыць,\nСабраць усё, што удалося\nНевыпадковае стварыць.\n\nБацькоўскі клопат, лёсы вучняў,\nЯкіх мы ставім на крыло…\nУ гэтым ўсім, без фразы гучнай,\nГарыць настаўніка жыццё.\n\nЯшчэ ў жыцці, што застаецца\n( “ У сувязі” ці “ без прычын” ),\nХай ціхім рэхам адгукнецца\nХоць выпадковы успамін.\n\nХоць мімалётна прыгадайце\nЖытло на вулцы Пушкароў,\nЎ альбомных здымках тых пазнайце,\nКаго ўзнялі у ранг сяброў.\n\nХвіліну часу адарвіце\n( Ну проста каб пагаварыць! ),\nІ тэлефончык набярыце\nЦі напішыце сябру ліст.\n\nШкада, што сем’ямі-дамамі\nНе давялося нам дружыць,\nХоць менавіта так з сябрамі\nАдзін сучаснік раіў жыць.\n\nІ ў тым жыцці, што застаецца\n( Хоць зменлівы і хісткі час ),\nХай ў дзецях, ў вучнях адаб’ецца\nЎсё лепшае, было што ў нас.\n\nТады жыццё, што застаецца\n( Ах, не вярнуцца нам назад! ),\nТабе па-добраму ўсміхнецца.\nІ прасвятліцца далягляд!",
+                "date": "2004 г., жнівень",
+                "footnotes": ""
+            },
+            {
+                "title": "Аднакурсніца",
+                "subtitle": "Санет  лірычны",
+                "epigraph": "",
+                "text": "Спасибо вам и сердцем и душой\nЗа наши не-гулянья под луной,\nЗа солнце не у нас над головами.\nМарина Цветаева\n\nВольга, Волечка, Оля, Олечка…\nКолькі ў словах чароўных “ О” !..\nНе змянілася ты ніколечкі,\nА рассталіся мы даўно.\n\nВольга, вабная і гарачая\nТварам, воблікам і душой…\nДзіўна мне, што гады юначыя\nНе спаліў я тады з табой…\n\nШчасця кропелькі не прасілі,\nНе шукалі дарогі адной,\nНе злучылі ў палёце крылы…\n\nТолькі ў тым ёсць цяпер супакой:\nШчасці два мы у свеце стварылі –\nТы з каханым, я з мілай сваёй.",
+                "date": "27 чэрвеня 2004 г.",
+                "footnotes": ""
+            },
+            {
+                "title": "Люблю жыццё…",
+                "subtitle": "",
+                "epigraph": "",
+                "text": "Люблю жыццё аддана і цярпліва,\nПра гэта многа слоў не трэба гаварыць.\nАдно шкада, што час ляціць імкліва,\nІ шмат чаго не ўдасца дарабіць.\n\nЦі, можа, гавару так па шаблону,\nА думкі устрывожаны другім?\nБыло ж калісь: вятры прыгнулі крону,\nІ я збаяўся, збочыў, адступіў…\n\nЖадаем і плануем вельмі многае.\nАле ў жыцці сваім ці вольны чалавек?\nНа кожны рух яго ёсць “суддзі строгія” –\nНачальнікі, суседзі, жорсткі век…\n\nТак і жывём, не ведаем ніколі,\nЧым станем мы на ростанях зямнных:\nСамотна-шэраю былінкай ў полі,\nЦі вішняй белай, радасцю для ўсіх.\n\nІ ўсё ж люблю жыццё аддана і цярпліва,\nПра гэта многа слоў не трэба гаварыць.\nІ шкода мне, што час ляціць імкліва,\nШто многае не ўдасца дарабіць…",
+                "date": "",
+                "footnotes": ""
+            },
+            {
+                "title": "Рамесная вывучка і паэзія",
+                "subtitle": "",
+                "epigraph": "",
+                "text": "Я недзе чытаў ў мемуарах,\nЯк сталы паэт “ М.Т. “\nХваліў сам сябе ў кулуарах,\nЦі можа на сходзе дзе:\n\n“ Маўляў, не губляе ён часу,\nА робіць грамадскі заказ\nІ, верачы ў партыю нашу,\nЛюструе ён смела час.\n\nА каб ўсё было больш надзейна,\nКаб знікнуў сумніву цень,\nТворыць у век свой спеўны\nНе меней трох вершаў ў дзень.\n\nВось так. І не трэба натхнення\nЦі нейкіх узлётаў душ.\nШукай толькі рыфм супадзення,\nНарошчвай ідэйны груз.\n\nМетафарай штось упрыгожыш,\nКалі застанецца час,\nЭпітэтам устрыножыш –\nІ вынесе ўсё Пегас!”\n\nІ вось, чытачам на пацеху,\nПраз горы і стэп плыве\nПаважна, вальяжна – не к спеху! –\nКанвеерны “МТЗ”…\n\n.  .  … .  ..  . .. …  ..  ..  ..  ..  ..  ..\nА я ўсёткі й зараз веру:\nНасуперак “гладкай страфе”\nПаэзія грукае ў дзверы,\n\nПаэзія ўсё ж жыве!",
+                "date": "2005 г., 18 мая.",
+                "footnotes": ""
+            },
+            {
+                "title": "Шампанскага не піць!",
+                "subtitle": "",
+                "epigraph": "",
+                "text": "Яшчэ й цяпер у нас ёсць показка старая:\n“ Без рызыкі жывеш – шампанскага не піць! “\nНу, а калі прасцей, то тут мараль такая:\nМаўляў, шампанскае вам трэба заслужыць.\n\nЗвычайны чалавек той службы пазбягае.\n“ Няма такіх дурных!” – гаворыць ён сабе.\nСярэдні чалавек на ўсё свой погляд мае.\nРазумны чалавек шампанскага не п’е!\n\nЗвычайны чалавек царэўны не жадае.\n“ Паўцарства за яе!” – яго па нервах б’е.\nСярэдні чалавек сваю каханку мае.\nРазумны чалавек шампанскага не п’е!\n\nЗвычайны чалавек на грошы не гуляе.\nСярэдні чалавек мільёнаў не крадзе.\nНа піва і сто грам сваё заўсёды мае.\nРазумны чалавек шампанскага не п’е!\n\nЗа працу медалёў не многа набірае,\nА граматы пустыя зусім не беражэ.\nСярэдні чалавек у цацкі не гуляе.\nРазумны чалавек шампанскага не п’е!\n\nУ мітынгах удзел звычайна не прымае –\nНе любіць ён, халуй яго як б’е.\nСярэдні чалавек куміраў не стварае.\nРазумнны чалавек шампанскага не п’е!\n\nХай некага ізноў у штопар ўсё зрывае,\nЗаплюшчыць вочы й да шампанскага імкне…\nСярэдні чалавек свой прынцып мае:\nЁн сам жыве і жыць другім дае!\n\nРазумны чалавек свой гонар мае:\nЯго з дарогі гэтай нішто ўжо не саб’е.\nНіякіх масак для сябе ніколі не шукае…\nНу, й пераможнага напою ніколі ён не п’е!..",
+                "date": "2005 г., 6 мая",
+                "footnotes": ""
+            },
+            {
+                "title": "Восеньскі  роздум",
+                "subtitle": "",
+                "epigraph": "",
+                "text": "Неяк крыху самотна\nУ асенняй глушы.\nЦіха падаюць кроплі\nТумановай расы.\n\nЛес яшчэ ўвесь зялёны…\nЖоўтым стане пасля –\nПазалоцяцца кроны,            і\nПачарнее зямля.\n\nАле восені знакі\nЁсць ў настроі душы:\nВосень ставіць адзнакі,\nЁй ацэнены мы.\n\nЧас спакойных ўспамінаў,\nБез журбы і тугі,\nПра той час, што ўжо мінуў\nУ пражытыя дні…\n\nАх, ці трэба саромецца,\nКалі к горлу – камяк,\nКалі раптам прымроіцца,\nШто ў жыцці ўсё не так…\n\nШто бядней усё склалася,\nЯк у марах было,\nІ не тое жадалася,\nШто давала жыццё…\n\nШто нязбыўнымі мары\nЗастаюцца заўжды,\nІ трывожнымі хмарамі\nЗаплываюць у сны.\n\nТы ратуй мяне, восень,\nЧысцінёю сваёй.\nДай ты, восені просінь,\nПрымірэння  спакой,\n\nРазумення той ісціны,\nШто заўсёды ў жыцці\nСпалучыць трэба існасц\nІдэала й зямлі.\n\nІдэальнае зоркаю\nСвеціць нам, і ў начы\nАсвятляе нам горкую\nНашу сцежку ў жыцці…",
+                "date": "",
+                "footnotes": ""
+            },
+            {
+                "title": "Мая вера",
+                "subtitle": "",
+                "epigraph": "",
+                "text": "Многа тых, хто заўсёды спрабуе\nБолей займець у жыцці:\n“Жорстка жыццё патрабуе\nМоцныя мець карані –\n\nГрошы, здароўе, работа,\nДом і пры доме усё…”\nЗайдрасці шпількі, згрызоты,\nВечных клапот насланнё…\n\nЖырам душа абрастае,\nХочацца жыць, “як усе”…\nТак пакрысе і губляем\nМы ўсе святыні свае.\n\nПошасць чужая сцірае\nЛепшае ў нашым жыцці,\nЗлому служыць застаўляе,\nЎ рабскай калоне брысці.\n\nКраю служыць не жадаем…\nМовы зракліся даўно…\nПесні чужыя спяваем…\nСлавім цярпенне сваё…\n\nМожа, ўсё ж стане заслонам\nРыцарства роднай зямлі?\nМожа, нарэшце, заслонім\nТое, далі што вякі?\n\nНітку быцця непарыўную\nТворыць жыцця калаўрот…\nВерую ў Тройцу адзіную –\nМову, Радзіму, Народ!\n\nМова з народам нітуе,\nКрэпіць святым пачуццём:\nВыпалім пошасць любую,\nДзеля таго і жывём!",
+                "date": "2005 г., 26 мая",
+                "footnotes": ""
+            },
+            {
+                "title": "Астравы",
+                "subtitle": "",
+                "epigraph": "",
+                "text": "Час юнацтва знікае\nЗа гарою гадоў.\nЦі калі ўспамінаеш\nАднагодкаў-сяброў?\n\nСэрца грэе надзея,\nШто сустрэнемся зноў.\nНедзе ёсць Гарадзея –\nСкрыжаванне шляхоў.\n\nХай сустрэча не зменіць\nАнічога ў жыцці,\nПамяць зоркай праменіць,\nАднаўляе масты.\n\nВось адзін знакаміты\nЦвердзіў неяк даўней:\nАстравы – гэта міты,\nКантыненты – з людзей…\n\nЗ афарызмам не згодзен!\nПамыляўся стары.\nКантыненты – народы,\nЛюдзі – ўсё ж астравы.\n\nКожны востраў – гісторыя…\nРасказаць бы каму!\nСвет чароўны тут створаны\nПа натхненню свайму.\n\nДагукацца не проста\nІ цяпер, як заўжды:\nПаміж намі і вёрсты,\nІ маўчання гады.\n\nСвет бясконца цудоўны\nЗастаецца з табой,\nІ да смерці раптоўнай\nЁн з душою тваёй.\n\nТак на востраве кожным,\nТак з табой і са мной.\nАх, калі б было можна\nПеражыць ўсё наноў!\n\nІ пакуль мы жывыя -\nДасылайце лісты:\nАстравы не чужыя,\nАстравы – гэта мы!\n\nНа сустрэчу надзея\nАбуджаецца зноў.\nСустракай, Гарадзея,\nПасланцоў з астравоў!",
+                "date": "",
+                "footnotes": ""
+            },
+            {
+                "title": "Жнівеньскі час перадвосення",
+                "subtitle": "",
+                "epigraph": "",
+                "text": "Летняя ціхая раніца.\nКроплі расы на траве.\nЎ небе празрыстым і глянцавым\nБелая хмарка плыве.\n\nСонныя цені прылеглі –\nСонца марудна ідзе.\nКрокамі мерыць адлегласць\nБусел ў зялёнай траве.\n\nПомню я з даўніх гадоў:\nЗноў у душу маю просяцца\nКазкі жаданняў і сноў.\n\nУ задуменні прытоеным,\nЎ нейкім чаканні усё…\nБолі і раны загоены,\nПомніцца толькі дабро.\n\nНешта павінна адбыцца…\nМожа, настаў мой час.\nДалеч ракой серабрыцца.\nХтосьці чакае нас…\n\nЎ школьных гадах – яе ўбачыць,\nПотым – сустрэць бы сяброў…\nХочацца нечым адзначыць\nКожны з пражытых гадоў.\n\nСонца, раса і прасторы,\nВечны жыцця неспакой…\nСветлаю марай азораны\nБудзьце заўсёды са мной!..",
+                "date": "2005 г.",
+                "footnotes": ""
+            },
+            {
+                "title": "Фрагменты да мікрапаэмы “Восеньскі роздум”",
+                "subtitle": "",
+                "epigraph": "",
+                "text": "Ўспамінаю з адчаем\n( Колькі раз так было! ):\nКрок адзіны да раю\nЯ мяняў на нішто.\n\nНедасяжнае, тайнае\nПазаве зноў мяне.\nВецер слова вітальнае\nДа мяне данясе.\n\nАле зноў не паверу,\nНе рашуся я зноў,\nБо ўсе мары – хімеры\nЦі рамантыка сноў.\n\nБо жыве прадчуванне,\nШто не сыйдуцца зноў\nПаралелі “жаданне”\nІ “рэальнасць асноў”.\n\nМанатонна і сумна\nТак жыццё і прайшло.\nЎ свет шырокі і шумны\nНе раскрыў я акно.\n\nЎ гэтым ёсць знак адчаю –\nСплылі марна гады,\nБольш не хочацца раю\nСхаладзелай душы.\n\nЦішыня і самота\nЎ гэты восеньскі дзень\nЗгоняць лісцяў сумёты,\nНаварожаць зноў цень\n\nУспамінаў мінулых\nМаладосці маёй.\nДай душэўны прытулак,\nХоць на час супакой\n\nАд жыццёвых разладаў,\nВыпадковых падзей,\nДзе ні складу ні ладу,\nВоля іншых часцей…\n\nЎ маладосці, здаецца,\nЖыў я так, як хацеў,\nПа народнай прыкмеце:\nЯк хацеў, так і меў.\n\nНе хацеў ўсё адразу,\nДык яно й не прыйшло,\nПалічыўшы абразай\nСон, маўчанне маё.\n\nМы цяпер так далёка\nАд цудоўнай пары,\nДзе высока аблокі,\nКаляровыя сны.\n\nДзе яшчэ ўсё наперадзе,\nДзе чаканнем жывеш,\nА ў будзённасці верыцца,\nШто да шчасця ідзеш.\n\nЛёс яшчэ нам не мерыў\nПаласу нашых дат\nПалыном недаверу\nЦі жарствою няўдач.\n\nЧас пачаткаў адважных,\nДзе прастор, глыбіня,\nАдыйшоў незаўважна,\nІ вяртання няма.\n\nЯ цяпер ўспамінаю\nСтраты даўніх дарог\nІ, хоць позна, гадаю:\nЦі па іншаму б змог?\n\nЯ не здолеў, не змог,\nНе угледзеў вяршыні.\nШлях жыццёвы пралёг\nПа санлівай раўніне.\n\nІ няма каму жаліцца- -\nМы усе так жывём:\nБез святой апантанасці\nІ адным толькі днём…",
+                "date": "",
+                "footnotes": ""
+            },
+            {
+                "title": "Мелодыі няспетых песен",
+                "subtitle": "Трыпціх",
+                "epigraph": "Жизнь без тебя,\nКак жизнь до рождества Христова –\nГрешна, темна, сурова,\nКак ночь без света звёзд.\nЗ незакончанага юначага.",
+                "text": "1\n\nТрохвугольнік фігура жорсткая.\nПаэтычны выраз, знойдзены мной\nу школьнай “Геаметрыі” Кісялёва.\n\nАдзін мой сон, цяжкі і горкі,\nМне ўспамінаецца ізноў:\n“Жыццё не зблізіць нашы зоркі,\nХоць праміне і шмат гадоў.\n\nНас на бяскрайнім небасхіле\nРаскідаў быццам бы сам Бог…\nМне не хапіла волі, сілы –\nПрабіцца да цябе не змог…”\n\nСвятым і чыстым пакланеннем\nЯ поўніў кожны школьны дзень.\nМайго маўклівага малення\nНе абражаў другога цень.\n\nТаго другога, што ў трохкутнік\nЎпісаў зайдрослівы, злы лёс…\nНе, ўсё не так! Я не пакутнік\nІ не аматар горкіх слёз…\n\nХаця не радасць мне дарыла\nВясёлка школьных вечароў:\nУ белым танцы з ім кружыла,\nІ з ім вярталася дамоў.\n\nСцяной шкляною паміж намі\nЯгоны цень як быццам стаў.\nНе расхінуць сцяну рукамі…\nА можа, я не спрабаваў?\n\nЯ не ахвяра, не пакутнік.\nБыў шчаслівейшы сябра твой.\nЁн – пераможца? Я – адступнік?\nЧаму ж цяпер ён не з табой?\n\n\n\n2\n\nЗа мястэчкам дарога\nМіж руччамі лягла.\nДзесяць год ( Гэтак многа! )\nТы штодня ёй ішла.\n\nТам вадой напаўняецца\nПа вясне спадавік.\nДзьмухавец там ўсміхаецца,\nГоніць сок сакавік…\n\nТам над хатай звісае\nСтог бухматай лазы.\nВочы там асляпляе\nСонца ў кроплях расы…\n\nКлін дарог дзе звужаўся,\nТам, у тыя ж гады,\nХутарок размяшчаўся…\nНу, ці ўспомніла ты?\n\nМусіць, не. Бо чужое.\nІ не трэба табе.\nЎсё чужое – пустое.\nЭгаісты мы ўсе.\n\nЯ не помню дня першага,\nКалі я зразумеў:\nТы святое, вышэйшае,\nШто ў жыцці гэтым меў.\n\nТы ў жыццёвых асновах –\nМаці, Неба, Зямля –\nСветлаю зоркаю новай\nСваё месца знайшла.\n\nЯ б хацеў ўсе жаданні…\nЯ адной табой жыў…\nНе было ў нас спатканняў,\nА шчаслівы я быў.\n\nАле мне немагчыма\nІ другое забыць:\nЛя дарожнай развілкі\nНа Прамяны й Маргі…\n\nТам да хат упрыцірку\nЎсё палі і палі…\nРэўнасць свет засланіла.\nЯк магло гэтак быць?\n\nГоркім, цяжкім, пакутным\nРаптам стане жыццё,\nКалі горыч-атрута\nЗасланяе усё.\n\nМне здалося: я “трэці”\nЦі  “ніякі” зусім,\nЛя шчаслівых што трэцца\nІ смяюцца над кім.\n\nІ пісьмо адрачэннем -\nНе прызнаннем – было.\nГорды быў: пакланенне\nПрамяняў …на нішто.\n\nЯ не з’ехаў далёка,\nНа радзіме жыву.\nЗрэдку, як адзінока,\nДаўняй сцежкай іду.\n\nТут усё па-другому,\nХутарка ўжо няма.\nЗасталася дарога.\nТы па ёй не прайшла.\n\nМусіць, нам не сустрэцца\nБольш ніколі ў жыцці,\nЎ халады не сагрэцца -\nНе сышліся шляхі…\n\nБо нязбыўнымі мары\nЗастаюцца заўжды,\nХоць трывогамі-хмарамі\nЗрэдку будзяць ўначы…\n\n\n3\n\n\nГорда, цяжка, зацята\nНаракаў на жыццё:\nНу чаму не прынята\nЁй каханне маё?\n\nІ няспетаю песняй\nЗасталося яно.\nСвет вялікі – не цесна\nЎ ім самотна было.\n\nАх, дзяўчо светлакосае,\nКаб сустрэцца зноў нам,\nЯ б гаючымі росамі\nЗняў закляцця туман.\n\nЯ б аддана і свята,\nЎсёй душы глыбінёй…\nАле не, не прынята\nАнічога табой…\n\nТакі вось сон, стары і горкі,\nМне ўспамінаецца ізноў.\nБліжэй не сталі нашы зоркі,\nХоць прамінула шмат гадоў…",
+                "date": "2004 г., жнівень – верасень.",
+                "footnotes": ""
+            },
+            {
+                "title": "Углядайцеся ў фотаздымкі",
+                "subtitle": "",
+                "epigraph": "",
+                "text": "Фотаздымкі – іскрынкі вечнага,\nАсвятляюць жыццё маё,\nАбуджаюць ў душы спрадвечнае\nНастальгічнае пачуццё…\n\nНа іх будні і святы светлыя,\nГора, радасць, жыцця абсяг.\nІ надзеі тут нашы вечныя\nНа шчаслівы падзей працяг…\n\nМне шкада, што жывём таропка\nІ не ведаем каранёў.\nА як здымак ёсць, то фальш ці падробка\nНе зацемніць хаду гадоў…\n\nВось малы я, і помню цьмяна…\nВось вялікі ўжо – першы клас…\nА вось гэта – мы разам з мамай…\nЯк любіла яна ўсіх нас!..\n\nВось мой бацька – салдат Айчыннай,\nТой, Вялікай, святой вайны…\nТут на картачцы калектыўнай\nФрантавыя яго сябры…\n\nУглядайцеся ў фотаздымкі:\nГора, радасць, святочны дзень…\nТут збіраюцца залацінкі,\nЗабыцця тут знікае цень.\n\nМіг адзняты ужо не зменіцца,\nЁн дзясяткі гадоў жыве.\nЎсё астатняе перамелецца,\nТуманом забыцця сплыве.",
+                "date": "",
+                "footnotes": ""
+            },
+            {
+                "title": "Галасы маіх продкаў",
+                "subtitle": "",
+                "epigraph": "",
+                "text": "Вядомасці асобай мы не мелі,\nАвацый не ўшчынялася для нас,\nБагаццяў і палацаў не займелі\nІ не ўзняліся на Алімп ці на Парнас.\n\nШляхецкіх каранёў шукаць не трэба,\nЗ мужыцкай бальшыні ідзе наш радавод.\nВякамі ў сейбітах была патрэба,\nКаб цвёрда на зямлі стаяў народ.\n\nВякам жыта сеялі і жалі.\nЯно не раз гарэла ў полымі баёў.\nІ генералы бітвы выйгравалі,\nКалі былі мы ў шыхтах ваяроў.\n\nКаб толькі нас улады не чапалі!..\nДы дзе ты знойдзеш, дружа, гэткі рай…\nСудзілі нас, стралялі, высылалі\nЎ чужынскі Захад і ў Паўночны край.\n\nА потым мы дзяржаву мацавалі\nСваім калгасным посным працаднём.\nЗа тое нас з трыбунаў усхвалялі,\nАддзячыла Радзіма медалём.\n\nЗ маленькіх ручаін бруяцца рэкі.\nУсё жывое мае карані…\nЛёс, праз унукаў, дорыць чалавеку\nПрацяг жыцця, ў нашчадках, на вякі.\n\nСупольнасці народнай ты часцінка.\nАгульны лёс цябе, напэўна, не міне.\nДык будзь жа не пылінкай – залацінкай!\nНарод не будзе поўны без цябе…",
+                "date": "2009 г.",
+                "footnotes": ""
+            },
+            {
+                "title": "Мая Наталі",
+                "subtitle": "",
+                "epigraph": "",
+                "text": "Вы ці помніце, у Талстога\nП’ер гаворыць ( глядзі том другі ):\n“ Каб характару быў не такога,\nЯ б тады, о мая Наталі… “\n\nВолей аўтара ўсё заслоніцца,\nБудзе выйсце з любой бяды.\nІ ў канцы, гэта добра помніцца,\nП’ер застанецца з Наталі.\n\nЯк цудоўна у зладжаным хоры…\nДы не так у рэальным жыцці.\nТут прасцей, тут няма дырыжора,\nІ не можа чакаць Наталі.\n\nНе ад крыўды сказаў тыя словы,\nНе ад зайдрасці ( Бог барані!.. ).\nТы і зараз ў жыццёвых  асновах\nІдэал мой, мая Наталі…\n\nЯ здаваўся сабе нецікавай\nШэрай птушачкай без вагі.\nВось праслаўлюся важкай справай\nІ скажу ўсё табе, Наталі…\n\nАх, чаму быў такі я наіўны?\nНу, чаму быў такі я сляпы?\nПерайграць бы сюжэт прымітыўны…\nДы не можа чакаць Наталі…\n\nЯк у П’ера* – не атрымалася,\nБольш падобна на лёс Іллі**.\nНе пачаўшыся – абарвалася.\nВыбачай і забудзь, Наталі…\n\nНе у такт была музыка наша,\nДон-Наталля!.. Прайшлі гады.\nНазываю дачку ( ах, не нашу!.. )\nСветлым іменем – Наталі…",
+                "date": "",
+                "footnotes": "*П’ер – герой рамана Талстога “ Вайна і мір “.\n* * Ілля – герой рамана Ганчарова “ Абломаў “."
+            },
+            {
+                "title": "Мая Вера",
+                "subtitle": "",
+                "epigraph": "Жонцы, маці маіх дзяцей, прысвячаецца.",
+                "text": "\nВечна верыць у недасяжнае\nСіняй птушкі крыло?\nА жыццё было больш разважнае,\nСцежкай іншаю павяло.\n\nСцежка стала вясёлкай шчаснаю,\nЁй звязаліся берагі.\nСцежка стала дарогай яснаю,\nЗніклі, сцерліся міражы.\n\nЦудам быў спеў салаўіны\nНад кручамі ля ракі.\nЛёсы свае мы злучылі\nНа берагах Дзісны.\n\nЛёс ратаваў ад адступніцтва,\nХоць год мы не разам былі:\nЧары злой долі-разлучніцы\nІ доля маёй віны…\n\nА потым сказалі мы словы,\nІх нельга да скону забыць,\nСловаў святой замовы.\nА нельга святыню бурыць!..\n\nНельга бурыць недаверам,\nСлабасцю, здрадай ліхой.\nЖыць, і любіць, і верыць.\nКаб размінуцца з бядой…\n\nЗ Верай знайшлі кветку шчасця\nЗ ёй і цяпер жывём.\nКоля, Наташа і Маша\nСагрэты яе цеплынёй.\n\nСёння ў застоллі нашым\nІскрыцца бакал з віном.\nСталі пярсцёнкі нашы\nКаштоўнейшым серабром.\n\nКалісьці сказалі мы словы,\nІх нельга да скону забыць,\nСловаў святой замовы…\nІ нельга святыню бурыць!..",
+                "date": "19 жніўня 2004 г.",
+                "footnotes": ""
+            },
+            {
+                "title": "Развітальнае слова",
+                "subtitle": "",
+                "epigraph": "Памяці сябра-аднакурсніка Івана  Паддубіцкага\n( філфак МДПІ імя Горкага, выпуск 1974 г. )",
+                "text": "Калі будзеце вы ўспамінаць\nАднакурснікаў часу юначага,\nНе забудзьцеся Ваню назваць –\nНазаўсёды для нас ён страчаны.\n\nЎспамінайце яго сярод тых,\nХто ужо не сустрэнецца з намі:\nПа прыступках жыццёвых крутых\nЁн прыйшоў да самотнай брамы.\n\nЎспамінайце яго маладым,\nДобрым, шчырым, зычлівым.\nПесімістам наш Ваня не быў,\nІ не дужа любіў ганарлівых.\n\nЯ і зараз паехаў бы з ім\nНа балотны абшар салігорскі.\nГрошы тут ні пры чым –\nТам урок атрымаў я сяброўскі…\n\nАдчуванне у гэтыя дні:\nБыццам нас ў час размоў перарвалі,\nБыццам нечага мы не змаглі,\nНешта важнае не дасказалі…\n\nАх, як рэдка сустрэчы былі,\nМала вершаў сябрам прачыталі.\nМожа, лепшыя з іх бераглі,\nУ душы неабачна хавалі…\n\nЯк каштоўнасць альбом берагу,\nЎ якім вершы твае з “ Маладосці “.\nІх чытаю – з табой гавару,\nДа цябе завітаў я у госці.\n\nТрыццаць з лішкам гадоў на сяле\nМы настаўнікамі працавалі…\nЯ ў газеце чытаў пра цябе,\nТам цудоўна аб працы сказалі.\n\nЯ, бывае, на здымак гляджу,\nДзе мы ўтрох і зусім маладыя.\nДараваць я сабе не магу:\nНяма здымка, дзе потым – старыя…\n\nМнога зараз ў жыцці мітусні.\nЗрэдку хочацца ў часе згубіцца,\nПа Студэнцкай па бруку прайсці,\nЎ пераход прывакзальны спусціцца,\n\nПрэсу свежую там купіць\nІ на першую пару з’явіцца,\n“Крошку ведаў“ ад “глыбы“ адбіць\n( Можа, некалі што й прыгадзіцца )…\n\nЗаглянуць ў інтэрнацкі пакой\n( Ваня, Коля, Валодзя – вітанне! ).\nРаўнавагу вярнуць і спакоў,\nІ шчаслівых дарог прадчуванне…\n\nМы гасцюем на гэтай зямлі,\nЎсе пражытыя дні – дарагія…\nНу а тых, хто заўчасна пайшлі,\nБудзем помніць, пакуль мы жывыя.",
+                "date": "Сакавік- красавік 2011 г.",
+                "footnotes": ""
+            },
+            {
+                "title": "Роздум аб паэзіі",
+                "subtitle": "",
+                "epigraph": "З нагоды зборніка вершаў Янкі Паддубіцкага\n“Наднёманскі роздум”",
+                "text": "Калі па школьнаму шаблону\nУзяцца талент вымяраць…\n“Паэт “другога эшалона”, -\nЗахоча крытык так сказаць. –\n\nПаэт “другога эшалона”,\nБез “паэтычнага імя”,\nІ, згодна нашых эталонаў,\nНе йдзе ў “абойму” драбяза:\n\nГрамадскі пафас слабавіты,\nДы й рыфма можа бракаваць,\nМатыў лірычны не развіты…\nЎ чытанкі рана уключаць.”\n\nЁн, крытык, сёння прынцыповы\n( Іван яму ні брат, ні сват ),\nІ эстэтычныя высновы\nДавесці ўсім ён проста рад.\n\nЦудоўны цыркуль крытык мае.\nА ўсё ж, што там ні гавары,\nЁн глыбіні усёй не знае…\n( Каб знаў, паэтам стаў, сябры!.. )\n\nДы хопіць спрэчак! Прачытаем\nІванаў верш адзін, другі.\nПаверце мне, у іх спаткаем\nСамой паэзіі радкі.\n\nТвой “Роздум…” я чытаў паціху,\nЯк дзённік, нарыс, успамін.\nЗ яго падзеі помню крыху,\nЯны з агульных ручаін.\n\nНадзеі, мары, парыванні\nЗ тых, паўзабытых ўжо, часін\nЯк рамантычныя паданні\nТрывожаць бег начных гадзін.\n\nЎ адным пакоі інтэрнацкім\nЖылі камунай тры гады.\nХлеб-соль дзялілі мы па-брацку\n( Вярнуцца я б хацеў туды!.. )\n\nШто пішаш вершы – заўважалі,\nДы нам было не да таго:\nБудзёншчыны нас неслі хвалі,\nХапала клопату свайго…\n\nТы ж быў паэт, таму, няйначай,\nТы жыў не тым, чым мы жылі:\nГлядзеў на свет крыху іначай,\nНе так, глядзіць як бальшыня.\n\nТы разумеў, як многа значыць\nСуладна з светам боскім жыць,\nЎ малым вялікае убачыць,\nА выпадковае – забыць.\n\nПаход у лес – не за грыбамі.\nДа Нёмна выйсці – верш пісаць…\nТакіх звычайна дзівакамі\nУ нас прывыклі называць.\n\nДы нараджаецца жаданне\nСказаць самому аб жыцці,\nІ спраўдзіць нечыя чаканні,\nКамусьці словам памагчы.\n\nСвятлее дзень, цяплом сагрэты,\nІ разумееш больш жыццё,\nПільней ўглядаешся ў прыкметы,\nЯк йдзе да лепшага яно…\n\nТвае радкі ўжо цытавалі\nНастаўнікі і чытачы\n( Хоць асабіста і не зналі ), *\nА ў мове вуснай – землякі **\n\nІ ёсць, Іван, ў сяброўстве нашым\nАдценне горычы-тугі:\nСугучнасць душ спасцігнуць з часам,\nДы развітацца назаўжды…\n\nПаэт “другога эшалона”…\nТакія ёсць! Вось я… Вось ён…\nМы не для крытыкаў гаворым,\nІ не для крытыкаў жывём.\n\nРадкамі вершаў свет свой творым,\nНапоўнен ён душы святлом.\nАб нашых марах мы гаворым,\nЎсім добрым людзям – наш паклон!.",
+                "date": "",
+                "footnotes": "*Дакументальны факт. Радкі верша Янкі Паддубіцкага “Вочы дзяцей”цытавала ў сваім артыкуле ў раённай газеце настаўніца Вялікасельскай СШ Шаркаўшчынскага р-на Магаліцкая ( Верш да гэтага друкаваўся ў “Маладосці”  - № 5, 1995 г. )\n* *  Шэраг вершаў Янка Паддубіцкі прысвяціў сваім землякам – працаўнікам сяла, настаўнікам…"
+            },
+            {
+                "title": "Прайшло жыццё…",
+                "subtitle": "",
+                "epigraph": "",
+                "text": "Прайшло жыццё. Было яно кароткае.\nЗдаецца, быццам не пачаў і жыць.\nІ вось яно, самотна-адзіноткае,\nУ рэчаньку апошнюю бяжыць\n\nЗдавалася, што часу хопіць на усё.\nЎ дзяцінстве дні такія доўгія.\nНаперадзе раздольнае жыццё,\nУчынкі ўсё высокія і годныя.\n\nІмкліва круціцца няспынная зямля,\nА мы трызнім з упартасцю дзіцячай:\nГалоўнае ўсё збудзецца пасля,\nЖыццё адорыць радасцю гарачай.\n\n“Пасля” здараецца. Але усё ж не так.\nЯк, вынік, ад задумы ты далёкі!\nГадаем зноў: ці гэта зорак знак,\nЦі той усё “іспыт жыццём” высокі.\n\nМагчымы міг вялікіх перамен\nСхаваецца і больш не абзавецца.\nЯк маляваны некім карабель\nЎ гульні, што намі “ветразем” завецца…",
+                "date": "",
+                "footnotes": ""
+            },
+            {
+                "title": "Игра",
+                "subtitle": "Ода",
+                "epigraph": "Шарковщинской брейн-ринговской\nсборной  п о с в я щ а е т с я",
+                "text": "\nВот гонг звучит опять,\nЗовёт к барьеру.\nВопрос мне надо “взять” –\nКоманда верит!\n\nСекунды счёт ведут,\nИ всё на грани…\nДрузья вопрос “берут” –\nУдача с нами!\n\nУдаче быть всегда,\nПобеда – с нами…\nГори, гори, звезда,\nСияй лучами!\n\nСпасибо вам, друзья,\nЗа радость встречи…\nДа здравствует игра –\nСвободной мысли вече!\n\nИ есть у нас мечта\n( В победы верим! ):\nПусть гонг звучит всегда,\nЗовёт к барьерам!",
+                "date": "",
+                "footnotes": ""
+            },
+            {
+                "title": "Каманда сяброў",
+                "subtitle": "Элегія",
+                "epigraph": "",
+                "text": "\nЯ даўно ўжо нікуды не еду\nІ лічу, што патрэбы няма.\nСтанаўлюся дзядком-дамаседам.\nВось якая са мною бяда…\n\nАле ёсць ў кожным годзе часіна,\nШто змяняе мой вобраз жыцця.\nІ вядзе мяне зноў пуцявіна\nДа брэйн-рынгаўскага стала.\n\nІваноў, наш кіроўца раённы,\nПа вясне, як сыходзяць снягі,\nПадае нам сігнал тэлефонны:\n“ Час збірацца на бітву, сябры!\n\nВерхнядзвінскія хлопцы прыедуць,\nБраслаўчане павінны прыбыць.\nДы і мёрцы захочуць наведаць,\nЎзяць рэванш, пазайдросціць, здзівіць…”\n\nВось яно, вось яно…пачалося…\n“ Выклікаюць? “ – “Ідзём на вы! “\nХай жа будзе, здаўна як вялося, -\nПераможная зорка, гары!\n\nБез далёкай глыбіннай выведкі\nНяма сэнсу ў атаку ісці…\nМіша й Ігар – эліта разведкі –\nСправу знаюць і ў пошук пайшлі…\n\nЗ Барысовай жалезнай індукцыяй\nНа шырокі выходзім прастор…\nДай апору, Андрэй, у дэдукцыі,\nЗакідай аркан версій, Віктор!..\n\nЦі, давайце, мы зробім іначай!\nТы, Сяргей, сваё слова скажы.\nКаб імгненна усё перайначыць,\nПеруновай маланкай блісні!\n\nГод за годам…Глядзіш, ужо дзесяць\nНезаўважна прайшло пераможных гадоў.\nЯ прыеду яшчэ у наступны май месяц.\nКалі буду патрэбны камандзе сяброў.",
+                "date": "1 мая, 2010 г.",
+                "footnotes": ""
+            }
+        ]
+    }
+];
+
+</script>
+    <script>
+// Poem data is loaded from data.js
+
+const poemListEl = document.getElementById('poem-list');
+const titleEl = document.getElementById('poem-title');
+const subtitleEl = document.getElementById('poem-subtitle');
+const epigraphEl = document.getElementById('poem-epigraph');
+const bodyEl = document.getElementById('poem-body');
+const dateEl = document.getElementById('poem-date');
+const footnotesEl = document.getElementById('poem-footnotes');
+const wrapperEl = document.getElementById('poem-wrapper');
+const themeToggleBtn = document.getElementById('theme-toggle');
+
+// Mobile Menu Elements
+const sidebarEl = document.getElementById('sidebar');
+const menuToggleBtn = document.getElementById('menu-toggle');
+const mobileOverlayEl = document.getElementById('mobile-overlay');
+
+let isDay = false; // Default is night
+
+// Mobile Menu Logic
+function toggleMobileMenu() {
+    sidebarEl.classList.toggle('open');
+    mobileOverlayEl.classList.toggle('active');
+}
+
+function closeMobileMenu() {
+    sidebarEl.classList.remove('open');
+    mobileOverlayEl.classList.remove('active');
+}
+
+menuToggleBtn.addEventListener('click', toggleMobileMenu);
+mobileOverlayEl.addEventListener('click', closeMobileMenu);
+
+// Theme Toggle Logic
+themeToggleBtn.addEventListener('click', () => {
+    isDay = !isDay;
+    if (isDay) {
+        document.body.classList.remove('theme-night');
+        document.body.classList.add('theme-day');
+    } else {
+        document.body.classList.remove('theme-day');
+        document.body.classList.add('theme-night');
+    }
+    setTimeout(initParticles, 100);
+});
+
+// Initialize Navigation
+function initNav() {
+    let isFirst = true;
+    let firstPoem = null;
+    let globalPoemIndex = 1;
+    
+    categories.forEach((category) => {
+        let container = poemListEl;
+        let details = null;
+        
+        if (categories.length > 1) {
+            details = document.createElement('details');
+            details.className = 'nav-category';
+            
+            const summary = document.createElement('summary');
+            summary.textContent = category.title;
+            details.appendChild(summary);
+            container = details;
+        }
+        
+        const ul = document.createElement('ul');
+        ul.className = 'nav-category-list';
+        
+        category.poems.forEach((poem) => {
+            if (isFirst) firstPoem = poem;
+            
+            const li = document.createElement('li');
+            li.className = `nav-item ${isFirst ? 'active' : ''}`;
+            
+            const a = document.createElement('a');
+            a.href = '#';
+            a.textContent = `${globalPoemIndex}. ${poem.title}`;
+            globalPoemIndex++;
+            a.onclick = (e) => {
+                e.preventDefault();
+                // Remove active class from all items
+                document.querySelectorAll('.nav-item').forEach(nav => nav.classList.remove('active'));
+                li.classList.add('active');
+                loadPoem(poem);
+            };
+            
+            li.appendChild(a);
+            ul.appendChild(li);
+            
+            isFirst = false;
+        });
+        
+        container.appendChild(ul);
+        if (details) {
+            poemListEl.appendChild(details);
+        }
+    });
+    
+    // Font Size Control
+    const fontSliders = document.querySelectorAll('.font-slider');
+    if (fontSliders.length > 0) {
+        // Set initial value based on screen size
+        let initialSize = 1.8;
+        if (window.innerWidth <= 600) {
+            initialSize = 1.1;
+        } else if (window.innerWidth <= 900) {
+            initialSize = 1.4;
+        }
+        document.documentElement.style.setProperty('--poem-font-size', `${initialSize}rem`);
+        
+        fontSliders.forEach(slider => {
+            slider.value = initialSize;
+            slider.addEventListener('input', (e) => {
+                const val = e.target.value;
+                document.documentElement.style.setProperty('--poem-font-size', `${val}rem`);
+                // sync all sliders
+                fontSliders.forEach(s => { if (s !== e.target) s.value = val; });
+            });
+        });
+        
+        // Font size buttons
+        const updateFont = (step) => {
+            let current = parseFloat(fontSliders[0].value);
+            let newVal = current + step;
+            if (newVal < 0.8) newVal = 0.8;
+            if (newVal > 2.4) newVal = 2.4;
+            document.documentElement.style.setProperty('--poem-font-size', `${newVal}rem`);
+            fontSliders.forEach(s => s.value = newVal);
+        };
+        
+        document.querySelectorAll('.font-decrease').forEach(btn => {
+            btn.addEventListener('click', () => updateFont(-0.1));
+        });
+        document.querySelectorAll('.font-increase').forEach(btn => {
+            btn.addEventListener('click', () => updateFont(0.1));
+        });
+    }
+    
+    // Load initial poem
+    if (firstPoem) {
+        loadPoem(firstPoem, true);
+    }
+}
+
+function loadPoem(poem, initial = false) {
+    if (!initial) {
+        wrapperEl.classList.add('fading');
+    }
+    
+    setTimeout(() => {
+        titleEl.textContent = poem.title;
+        subtitleEl.textContent = poem.subtitle || '';
+        subtitleEl.style.display = poem.subtitle ? 'block' : 'none';
+        
+        if (poem.epigraph) {
+            epigraphEl.innerHTML = poem.epigraph.replace(/\n/g, '<br>');
+            epigraphEl.style.display = 'block';
+        } else {
+            epigraphEl.innerHTML = '';
+            epigraphEl.style.display = 'none';
+        }
+        
+        const stanzas = poem.text.split('\n\n').map(s => {
+            const hasTab = s.startsWith('\t') || s.includes('\n\t');
+            const lines = s.replace(/\t/g, '').replace(/\n/g, '<br>');
+            if (/^\d+$/.test(s.trim())) {
+                return `<p class="stanza part-number">${s.trim()}</p>`;
+            }
+            return `<p class="stanza${hasTab ? ' indented' : ''}">${lines}</p>`;
+        }).join('');
+        bodyEl.innerHTML = stanzas;
+        
+        dateEl.textContent = poem.date || '';
+        
+        if (poem.footnotes) {
+            footnotesEl.innerHTML = poem.footnotes.replace(/\n/g, '<br>');
+            footnotesEl.style.display = 'block';
+        } else {
+            footnotesEl.innerHTML = '';
+            footnotesEl.style.display = 'none';
+        }
+        
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+        closeMobileMenu(); // Close sidebar on mobile after selecting a poem
+        
+        if (!initial) {
+            wrapperEl.classList.remove('fading');
+        }
+    }, initial ? 0 : 400);
+}
+
+// --- Canvas Animation ---
+const canvas = document.getElementById('particles-canvas');
+const ctx = canvas.getContext('2d');
+let width, height;
+let particles = [];
+let animationFrameId;
+
+function getParticleColor() {
+    const computedStyle = getComputedStyle(document.body);
+    const color = computedStyle.getPropertyValue('--particle-color').trim();
+    return color || (isDay ? '235, 175, 175' : '255, 255, 255');
+}
+
+function initParticles() {
+    if (animationFrameId) cancelAnimationFrame(animationFrameId);
+    
+    width = window.innerWidth;
+    height = window.innerHeight;
+    canvas.width = width;
+    canvas.height = height;
+    
+    particles = [];
+    const numParticles = Math.floor((width * height) / 4000);
+    const colorStr = getParticleColor();
+    
+    for (let i = 0; i < numParticles; i++) {
+        particles.push(createParticle(colorStr));
+    }
+    
+    animateParticles();
+}
+
+function createParticle(colorStr) {
+    if (isDay) {
+        // Day theme: movement from Version 2 Summer (drifting fireflies/petals)
+        return {
+            x: Math.random() * width,
+            y: Math.random() * height,
+            radius: Math.random() * 2 + 1,
+            vx: (Math.random() - 0.5) * 0.5,
+            vy: (Math.random() - 0.5) * 0.2, // Drifting around, not falling
+            alpha: Math.random() * 0.8 + 0.2,
+            twinkleSpeed: 0.01 + Math.random() * 0.02,
+            colorStr: colorStr
+        };
+    } else {
+        // Night theme: speed and blinking from Version 1
+        return {
+            x: Math.random() * width,
+            y: Math.random() * height,
+            radius: Math.random() * 1.5,
+            vx: 0,
+            vy: -0.1, // Very slow movement upwards
+            alpha: Math.random(),
+            twinkleSpeed: 0.02 + Math.random() * 0.03, // Faster blink from V1
+            colorStr: colorStr
+        };
+    }
+}
+
+function animateParticles() {
+    ctx.clearRect(0, 0, width, height);
+    
+    particles.forEach(p => {
+        ctx.beginPath();
+        
+        if (isDay) {
+            // Day Theme: Drifting like V2 Summer
+            p.x += p.vx;
+            p.y += p.vy;
+            
+            ctx.arc(p.x, p.y, p.radius * 1.5, 0, Math.PI * 2);
+            p.alpha += p.twinkleSpeed;
+            if (p.alpha > 0.8 || p.alpha < 0.2) p.twinkleSpeed = -p.twinkleSpeed;
+            
+            ctx.fillStyle = `rgba(${p.colorStr}, ${Math.abs(p.alpha)})`;
+            ctx.shadowBlur = 0;
+            
+            // Wrap around
+            if (p.y > height + 10) p.y = -10;
+            if (p.y < -10) p.y = height + 10;
+        } else {
+            // Night Theme: Slow moving up and twinkling like V1
+            ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
+            
+            p.alpha += p.twinkleSpeed;
+            if (p.alpha > 1 || p.alpha < 0.2) p.twinkleSpeed = -p.twinkleSpeed;
+            
+            p.x += p.vx;
+            p.y += p.vy;
+            
+            ctx.fillStyle = `rgba(${p.colorStr}, ${Math.abs(p.alpha)})`;
+            if (p.radius > 1) {
+                ctx.shadowBlur = 8;
+                ctx.shadowColor = `rgba(${p.colorStr}, 0.8)`;
+            } else {
+                ctx.shadowBlur = 0;
+            }
+            
+            // Wrap around (moving up)
+            if (p.y < 0) {
+                p.y = height;
+                p.x = Math.random() * width;
+            }
+        }
+        
+        ctx.fill();
+        
+        // Wrap X
+        if (p.x > width) p.x = 0;
+        if (p.x < 0) p.x = width;
+    });
+    
+    animationFrameId = requestAnimationFrame(animateParticles);
+}
+
+window.addEventListener('resize', initParticles);
+
+// Start
+initNav();
+setTimeout(initParticles, 100);
+
+</script>
+</body>
+</html>
